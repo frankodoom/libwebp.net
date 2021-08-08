@@ -16,5 +16,8 @@
             var codec = new Codec(configuration);
           
     //call encode function on the codec and pass a FileStream or File Path
-             await codec.EncodeAsync("THis will be a FileStream or FilePath");   
+    // your converted webp file will be returned as a FileStream
+            FileStream fileStream =  await codec.EncodeAsync("THis will be a FileStream or FilePath"); 
+            
+            //...create your file by copying or downloading..etc   
 
