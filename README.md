@@ -9,7 +9,7 @@
                  .Preset(Preset.DEFAULT)
                  .QualityFactor(200)
                  .AlphaQ(10)
-                  //.... add more////
+                  //.... add more advanced options//
                  .Build();
             
    //pass the configuration to the codec
@@ -20,4 +20,7 @@
             FileStream fileStream =  await codec.EncodeAsync("THis will be a FileStream or FilePath"); 
             
             //...create your file by copying or downloading..etc   
+```
 
+# Advanced Encoding
+The encoder contains a lot advanced parameters. LibWebP.Net supports libWebp's advanced API which provides the ability to have on-the-fly cropping and rescaling, something of great usefulness on memory-constrained environments like mobile phones. They can be useful to better balance the trade-off between compression efficiency and processing time. You can get access to the advanced encode or decode parameters by adding the various options below to your ```WebpConfigurationBuilder```
