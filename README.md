@@ -17,7 +17,7 @@
           
     // Pass FileStream or File Path to the Encoder
     // your converted webp file will be returned as a FileStream
-            FileStream fileStream =  await codec.EncodeAsync("THis will be a FileStream or FilePath"); 
+            FileStream fileStream =  await codec.EncodeAsync("image.png"); 
             
             //...create your file by copying or downloading..etc   
 ```
