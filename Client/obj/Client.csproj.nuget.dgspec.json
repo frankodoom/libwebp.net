@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\Libwebp.Standard\\Libwebp.Net.csproj": {}
+    "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\Client\\Client.csproj": {}
   },
   "projects": {
-    "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\Libwebp.Standard\\Libwebp.Net.csproj": {
+    "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\Client\\Client.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\Libwebp.Standard\\Libwebp.Net.csproj",
-        "projectName": "Libwebp.Net",
-        "projectPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\Libwebp.Standard\\Libwebp.Net.csproj",
+        "projectUniqueName": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\Client\\Client.csproj",
+        "projectName": "Client",
+        "projectPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\Client\\Client.csproj",
         "packagesPath": "C:\\Users\\fodoo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\Libwebp.Standard\\obj\\",
+        "outputPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\Client\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -34,7 +34,11 @@
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\libwebp.net\\Libwebp.Net.csproj": {
+                "projectPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\libwebp.net\\Libwebp.Net.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

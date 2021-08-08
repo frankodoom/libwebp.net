@@ -5,7 +5,9 @@
   },
   "libraries": {},
   "projectFileDependencyGroups": {
-    "net5.0": []
+    "net5.0": [
+      "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\libwebp.net\\Libwebp.Net.csproj"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\fodoo\\.nuget\\packages\\": {},
@@ -16,11 +18,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\Libwebp.Standard\\Libwebp.Net.csproj",
-      "projectName": "Libwebp.Net",
-      "projectPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\Libwebp.Standard\\Libwebp.Net.csproj",
+      "projectUniqueName": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\Client\\Client.csproj",
+      "projectName": "Client",
+      "projectPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\Client\\Client.csproj",
       "packagesPath": "C:\\Users\\fodoo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\Libwebp.Standard\\obj\\",
+      "outputPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\Client\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -43,7 +45,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\libwebp.net\\Libwebp.Net.csproj": {
+              "projectPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\libwebp.net\\Libwebp.Net.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -73,5 +79,16 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1104",
+      "level": "Error",
+      "message": "Unable to find project 'C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\libwebp.net\\Libwebp.Net.csproj'. Check that the project reference is valid and that the project file exists.",
+      "libraryId": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\libwebp.net\\Libwebp.Net.csproj",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    }
+  ]
 }

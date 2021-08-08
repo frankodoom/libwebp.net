@@ -6,15 +6,29 @@ using System.Threading.Tasks;
 
 namespace Libwebp.Standard
 {
-    public class Converter
+    /// <summary>
+    /// Encodes and Decodes .WebP
+    /// </summary>
+    public class Codec
     {
+        private WebPConfiguration _configuration { get; set; }
+        /// <summary>
+        /// public constructor that accepts the configuration
+        /// and uses it through out the encode and decode process
+        /// </summary>
+        /// <param name="configuration"></param>
+        public Codec(WebPConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         //
 
         /// <summary>
         /// Recieve a file stream convert to file and encode, Handle encoding inmemory
         /// and write output from memory. No Persisting!
         /// </summary>
-        public async void ConvertToWebPAsync(FileStream File, WebPConfiguration config)
+        public async Task<FileStream> EncodeAsync(FileStream File)
         {
             // Use ProcessStartInfo class
             ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -42,7 +56,7 @@ namespace Libwebp.Standard
                 // Log error.
             }
         }
-        public async void ConvertToWebPAsync(string FilePath)
+        public async Task<FileStream> EncodeAsync(string FilePath)
         {
             // Use ProcessStartInfo class
             ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -50,6 +64,7 @@ namespace Libwebp.Standard
             startInfo.UseShellExecute = false;
             startInfo.FileName = "codecs/cwebp.exe";
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            //TODO dynamically construct arguments based on configuration
             startInfo.Arguments = "cwebp -q 80 image.jpg -o image.webp";
 
             try
