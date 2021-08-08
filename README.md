@@ -1,5 +1,5 @@
 # libwebp.net
- An asynchronuous  crossplatform utility for converting images to Google's .webp format for faster image rendering in Asp.Net Wep Apps. If you are in need of a seemless way to convert uploaded images to lossless formats to improve site speed this library is for you!
+ An asynchronuous  crossplatform utility for encoding images to Google's .webp format for faster image rendering in Asp.Net Wep Apps. Seemlessly convert uploaded images to lossless formats to improve speed in your web applications. 
  
  # Using the Library
  
@@ -23,4 +23,4 @@
 ```
 
 # Advanced Encoding
-The encoder contains a lot advanced parameters. LibWebP.Net supports libWebp's advanced API which provides the ability to have on-the-fly cropping and rescaling, something of great usefulness on memory-constrained environments like mobile phones. They can be useful to better balance the trade-off between compression efficiency and processing time. You can get access to the advanced encode or decode parameters by adding the various options below to your ```WebpConfigurationBuilder```
+The encoder contains a lot advanced parameters. LibWebP.Net supports libWebp's advanced encoding API which can be used to better balance the trade-off between compression efficiency and processing time. You can get access to the advanced encode  parameters by adding the various options below to your ```WebpConfigurationBuilder```
