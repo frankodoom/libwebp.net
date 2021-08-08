@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31424.327
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Libwebp.Net", "Libwebp.Net.csproj", "{8D55798F-F3F7-439D-8882-F53B5E577FF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "..\Client\Client.csproj", "{5841D96F-B506-423A-9D9A-910D75171F48}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D55798F-F3F7-439D-8882-F53B5E577FF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D55798F-F3F7-439D-8882-F53B5E577FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D55798F-F3F7-439D-8882-F53B5E577FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D55798F-F3F7-439D-8882-F53B5E577FF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5841D96F-B506-423A-9D9A-910D75171F48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5841D96F-B506-423A-9D9A-910D75171F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5841D96F-B506-423A-9D9A-910D75171F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5841D96F-B506-423A-9D9A-910D75171F48}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {18555927-C736-4FF7-AF71-632FC645B363}
+	EndGlobalSection
+EndGlobal
