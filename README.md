@@ -6,10 +6,8 @@
  ```csharp
    // create your WebP Configuration using fluent builder 
             var configuration = new WebpConfigurationBuilder()
-                 .Preset(Preset.DEFAULT)
-                 .QualityFactor(200)
-                 .AlphaQ(10)
-                  //.... add more advanced options//
+                 .FIleInput("image.png")
+                 .FIleOutput("image.webp")
                  .Build();
             
    //pass the configuration to the codec
@@ -24,3 +22,17 @@
 
 # Advanced Encoding
 The encoder contains a lot advanced parameters. LibWebP.Net supports libWebp's advanced encoding API which can be used to better balance the trade-off between compression efficiency and processing time. You can get access to the advanced encode  parameters by adding the various options below to your ```WebpConfigurationBuilder```
+
+
+ ```csharp
+   // create your WebP Configuration using fluent builder 
+            var configuration = new WebpConfigurationBuilder()
+                 .FIleInput("image.png")
+                 .FIleOutput("image.webp")
+                 .Preset(Preset.DEFAULT)
+                 .QualityFactor(200)
+                 .AlphaQ(10)
+                  //.... add more advanced options//
+                 .Build();
+               
+```
