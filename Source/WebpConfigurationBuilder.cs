@@ -25,7 +25,7 @@ namespace Libwebp.Net
         {
             if (value == null)
                 throw new OutputFileNameNotFoundException("Specify the name of the output WebP file. ");
-            _config.Output = value;
+            _config.Output = "-o " + value;
             return this;
         }
 

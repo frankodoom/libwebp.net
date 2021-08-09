@@ -28,36 +28,36 @@ namespace Libwebp.Standard
         /// Recieve a file stream convert to file and encode, Handle encoding inmemory
         /// and write output from memory. No Persisting!
         /// </summary>
-        public async Task<FileStream> EncodeAsync(File File)
-        {
-            // Use ProcessStartInfo class
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.CreateNoWindow = true;
-            startInfo.UseShellExecute = false;
-            startInfo.FileName = "codecs/cwebp.exe";
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.Arguments = "cwebp -q 80 image.jpg -o image.webp";
+        //public async Task<FileStream> EncodeAsync(FileStream File)
+        //{
+        //    // Use ProcessStartInfo class
+        //    ProcessStartInfo startInfo = new ProcessStartInfo();
+        //    startInfo.CreateNoWindow = true;
+        //    startInfo.UseShellExecute = false;
+        //    startInfo.FileName = "codecs/cwebp.exe";
+        //    startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+        //    startInfo.Arguments = "cwebp -q 80 image.jpg -o image.webp";
 
-            try
-            {
-                // Start the process with the info we specified.
-                // Call WaitForExit and then the using statement will close.
-                using (Process exeProcess = Process.Start(startInfo))
-                {
-                    await exeProcess.WaitForExitAsync();
+        //    try
+        //    {
+        //        // Start the process with the info we specified.
+        //        // Call WaitForExit and then the using statement will close.
+        //        using (Process exeProcess = Process.Start(startInfo))
+        //        {
+        //            await exeProcess.WaitForExitAsync();
 
-                    //check if process exited if not kill process
-                    if (!exeProcess.HasExited)
-                        exeProcess.Kill();
-                }
-            }
-            catch
-            {
-                // Log error.
-            }
-            //stubbed return value
-            return await Task.FromResult(File.Create(""));
-        }
+        //            //check if process exited if not kill process
+        //            if (!exeProcess.HasExited)
+        //                exeProcess.Kill();
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        // Log error.
+        //    }
+        //    //stubbed return value
+        //    return await Task.FromResult(File.Create(""));
+        //}
         public async Task<FileStream> EncodeAsync(FileStream file)
         {
             if (file.Length == 0)
