@@ -12,7 +12,7 @@ namespace Libwebp.Net
     public class WebPConfiguration
     {
         public string FileInput { get; set; }
-        public string FileOutput { get; set; }
+        public string Output { get; set; }
         public float QualityFactor { get; set; }
         public int AlphaQ { get; set; }
         public string Preset { get; set; }

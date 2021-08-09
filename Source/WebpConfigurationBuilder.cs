@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Libwebp.Net.errors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,15 +16,16 @@ namespace Libwebp.Net
         private readonly WebPConfiguration _config = new WebPConfiguration();
         public WebPConfiguration Build() => _config;
 
-        public WebpConfigurationBuilder FileInput(string value)
+        /// <summary>
+        /// Specify the name of the output WebP file. If omitted, cwebp will perform compression but only report statistics. Using "-" as output name
+        /// </summary>
+        /// <param name="value"> The name of the webp output file</param>
+        /// <returns></returns>
+        public WebpConfigurationBuilder Output(string value)
         {
-            _config.FileInput = value;
-            return this;
-        }
-
-        public WebpConfigurationBuilder FileOutput(string value)
-        {
-            _config.FileOutput = value;
+            if (value == null)
+                throw new OutputFileNameNotFoundException("Specify the name of the output WebP file. ");
+            _config.Output = value;
             return this;
         }
 
