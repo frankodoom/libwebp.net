@@ -6,8 +6,8 @@
  ```csharp
    // create your WebP Configuration using fluent builder 
             var configuration = new WebpConfigurationBuilder()
-                 .FIleInput("image.png")
-                 .FIleOutput("image.webp")
+                 .FileInput("image.png")
+                 .FileOutput("image.webp")
                  .Build();
             
    //pass the configuration to the codec
@@ -27,8 +27,8 @@ The encoder contains a lot advanced parameters. LibWebP.Net supports libWebp's a
  ```csharp
    // create your WebP Configuration using fluent builder 
             var configuration = new WebpConfigurationBuilder()
-                 .FIleInput("image.png")
-                 .FIleOutput("image.webp")
+                 .FileInput("image.png")
+                 .FileOutput("image.webp")
                  .Preset(Preset.DEFAULT)
                  .QualityFactor(200)
                  .AlphaQ(10)
