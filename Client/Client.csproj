@@ -6,7 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\libwebp.net\Libwebp.Net.csproj" />
+    <ProjectReference Include="..\Source\Libwebp.Net.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="image.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -21,10 +21,12 @@ namespace Client
             
             //pass the configuration to the codec
             var codec = new Codec(configuration);
-          
+
+            FileStream k = File.Create("");
             //call encode function on the codec and pass a FileStream or File Path
             // your converted webp file will be returned as a FileStream
-            FileStream fileStream =  await codec.EncodeAsync("THis will be a FileStream or FilePath"); 
+            FileStream fs =  await codec.EncodeAsync(""); 
+           
             
             //...create your file by copying or downloading..etc
         }

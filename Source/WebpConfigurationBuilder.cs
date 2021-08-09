@@ -15,6 +15,20 @@ namespace Libwebp.Net
         private readonly WebPConfiguration _config = new WebPConfiguration();
         public WebPConfiguration Build() => _config;
 
+        public WebpConfigurationBuilder FileInput(string value)
+        {
+            _config.FileInput = value;
+            return this;
+        }
+
+        public WebpConfigurationBuilder FileOutput(string value)
+        {
+            _config.FileOutput = value;
+            return this;
+        }
+
+
+        /**/
         /// <summary>
         /// quality factor (0:small..100:big)
         /// </summary>
@@ -34,6 +48,16 @@ namespace Libwebp.Net
         public WebpConfigurationBuilder Preset(string value)
         {
             _config.Preset = value;
+            return this;
+        }
+        /// <summary>
+        /// compression method (0=fast, 6=slowest)
+        /// </summary>
+        /// <param name="value"> speed from 0-6</param>
+        /// <returns></returns>
+        public WebpConfigurationBuilder CompressionMethod(int value)
+        {
+            _config.CompressionMethod = value;
             return this;
         }
     }

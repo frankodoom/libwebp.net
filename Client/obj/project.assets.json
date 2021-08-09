@@ -1,12 +1,29 @@
 {
   "version": 3,
   "targets": {
-    "net5.0": {}
+    "net5.0": {
+      "Libwebp.Net/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/Libwebp.Net.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Libwebp.Net.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Libwebp.Net/1.0.0": {
+      "type": "project",
+      "path": "../Source/Libwebp.Net.csproj",
+      "msbuildProject": "../Source/Libwebp.Net.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\libwebp.net\\Libwebp.Net.csproj"
+      "Libwebp.Net >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -46,8 +63,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\libwebp.net\\Libwebp.Net.csproj": {
-              "projectPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\libwebp.net\\Libwebp.Net.csproj"
+            "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\Source\\Libwebp.Net.csproj": {
+              "projectPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\Source\\Libwebp.Net.csproj"
             }
           }
         }
@@ -79,16 +96,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1104",
-      "level": "Error",
-      "message": "Unable to find project 'C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\libwebp.net\\Libwebp.Net.csproj'. Check that the project reference is valid and that the project file exists.",
-      "libraryId": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\libwebp.net\\Libwebp.Net.csproj",
-      "targetGraphs": [
-        "net5.0"
-      ]
-    }
-  ]
+  }
 }

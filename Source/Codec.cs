@@ -28,7 +28,7 @@ namespace Libwebp.Standard
         /// Recieve a file stream convert to file and encode, Handle encoding inmemory
         /// and write output from memory. No Persisting!
         /// </summary>
-        public async Task<FileStream> EncodeAsync(FileStream File)
+        public async Task<FileStream> EncodeAsync(File File)
         {
             // Use ProcessStartInfo class
             ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -55,9 +55,16 @@ namespace Libwebp.Standard
             {
                 // Log error.
             }
+            //stubbed return value
+            return await Task.FromResult(File.Create(""));
         }
-        public async Task<FileStream> EncodeAsync(string FilePath)
+        public async Task<FileStream> EncodeAsync(FileStream file)
         {
+            if (file.Length == 0)
+                throw new FileNotFoundException();
+            //handle file
+
+
             // Use ProcessStartInfo class
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.CreateNoWindow = true;
@@ -84,7 +91,11 @@ namespace Libwebp.Standard
             {
                 // Log error.
             }
+            //stubbed return value
+            return await Task.FromResult(File.Create(""));
         }
+
+        
 
     }
 }
