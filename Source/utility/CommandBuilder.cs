@@ -22,25 +22,24 @@ namespace Libwebp.Net.utility
       
         public CommandBuilder(WebPConfiguration configuration)
         {
-
-            //initialize all arguments in order of execution
+            //initialize and construct  arguments in order of execution
             string[] args = new string[20];
             args[0] = configuration.FileInput;
-            args[1] = configuration.Preset;
-            args[2] = configuration.Output;
+            args[1] = "-p " + configuration.Preset;
+            args[2] = "-o " + configuration.Output;
 
             //todo add all possible command arguments
 
-            //call construct comand to build the dynamic comand
-            ConstructCommand(args);
+            Build(args);
         }
        
-        private void ConstructCommand(string[] args)
+        private void Build(string[] args)
         {
             //initialize the base command
             Command = new StringBuilder($"cwebp ");
  
-            var userargs = new List<string>();
+            List<string> userargs = new List<string>();
+
             foreach (var param in args)
             {
                 if(param == null)
