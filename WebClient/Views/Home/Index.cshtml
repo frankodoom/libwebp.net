@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">LibWebP.Net Web Test Client</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">An Asp.Net Core 5.0 Web App for Testing LibWebP.Net in Web Apps</a>.</p>
+</div>
+
+
+<br />
+<br />
+
+<form action= "Home/UploadFile" enctype="multipart/form-data" method="post">
+
+    <input type ="file" name="file" />
+    <br />
+    <input class="btn" type="submit" value="Upload" />
+</form>

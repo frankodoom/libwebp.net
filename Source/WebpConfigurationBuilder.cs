@@ -1,4 +1,5 @@
 ﻿using Libwebp.Net.errors;
+using Libwebp.Net.utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace Libwebp.Net
         {
             if (value == null)
                 throw new OutputFileNameNotFoundException("Specify the name of the output WebP file. ");
-            _config.Output = "-o " + value;
+            _config.Output = CommandPrefix.Output + value;
             return this;
         }
 
@@ -36,12 +37,12 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder QualityFactor(float value)
         {
-            _config.QualityFactor = value;
+            _config.QualityFactor = CommandPrefix.QualityFactor + value;
             return this;
         }
         public WebpConfigurationBuilder AlphaQ(int value)
         {
-            _config.AlphaQ = value;
+            _config.AlphaQ = CommandPrefix.AlphaQuality +value;
             return this;
         }
         /// <summary>
@@ -49,7 +50,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder Preset(string value)
         {
-            _config.Preset = value;
+            _config.Preset = CommandPrefix.Preset+ value;
             return this;
         }
         /// <summary>
@@ -59,7 +60,13 @@ namespace Libwebp.Net
         /// <returns></returns>
         public WebpConfigurationBuilder CompressionMethod(int value)
         {
-            _config.CompressionMethod = value;
+            _config.CompressionMethod = CommandPrefix.CompressionMethod + value;
+            return this;
+        }
+
+        public WebpConfigurationBuilder Lossless()
+        {           
+           _config.Lossless = CommandPrefix.Lossless;
             return this;
         }
     }

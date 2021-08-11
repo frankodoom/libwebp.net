@@ -11,14 +11,15 @@ namespace Libwebp.Net
     /// </summary>
     public class WebPConfiguration
     {
-        public string FileInput { get; set; }
-        public string Output { get; set; }
-        public float QualityFactor { get; set; }
-        public int AlphaQ { get; set; }
-        public string Preset { get; set; }
-        public int CompressionMethod { get; set; }
-
-
+        protected  internal WebPConfiguration()
+        {
+        }
+        internal string Output { get; set; }
+        internal string QualityFactor { get; set; }
+        internal string AlphaQ { get; set; }
+        internal string Preset { get; set; }
+        internal string CompressionMethod { get; set; }
+        internal string Lossless { get; set; }
 
 
     }
