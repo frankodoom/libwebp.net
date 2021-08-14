@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Libwebp.Net;
+using Libwebp.Standard;
+using System;
 
 namespace console
 {
@@ -6,7 +8,13 @@ namespace console
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var config = new WebpConfigurationBuilder()
+                .Output("output.webp")
+                .Build();
+
+            var encoder = new WebpEncoder(config);
+            //encoder.EncodeAsync();
+                 
         }
     }
 }

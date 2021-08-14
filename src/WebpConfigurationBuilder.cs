@@ -2,6 +2,7 @@
 using Libwebp.Net.utility;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace Libwebp.Net
         {
             if (value == null)
                 throw new OutputFileNameNotFoundException("Specify the name of the output WebP file. ");
-            _config.Output = CommandPrefix.Output + value;
+            _config.Output = CommandPrefix.Output + Path.GetTempPath()+ value;
             return this;
         }
 

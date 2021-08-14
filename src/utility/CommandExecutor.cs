@@ -46,12 +46,12 @@ namespace Libwebp.Net.utility
             }
             catch(Exception ex)
             {
-                throw new CommandExecutionException("Something went weong executing the command", ex.InnerException);
+                throw new CommandExecutionException("Something went wrong executing the command: " + ex.Message, ex.InnerException);
             }
 
             //get output stream from converted .webp tempfile 
 
-            var path = "new.webp";
+            var path = Path.GetTempPath()+ "output.webp" ;
 
             using var file = new FileStream(path, FileMode.Open, FileAccess.Read);
 

@@ -3,6 +3,22 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Libwebp.NET Web Client</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">A demo client for testing libwebp.net in Asp.Net Core</a>.</p>
+    <br />
+    <br />
+
+   <div>
+    <form action="Home/Upload" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="form-group">
+                <input type="file" name="file" value="file" class="form-control-file" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <input type="submit" class="btn btn-info" value="Upload" />
+            </div>
+        </div>
+   </form>
 </div>

@@ -22,6 +22,7 @@ namespace Libwebp.Net.utility
             return Task.FromResult(stream as FileStream);
         }
 
+     
         public static FileStream SetInputFileStream(FileStream fileStream)
         {
             InputFileStream = fileStream;

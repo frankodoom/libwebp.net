@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net5.0": {}
+    "net5.0": {
+      "Libwebp.Net/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/Libwebp.Net.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Libwebp.Net.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Libwebp.Net/1.0.0": {
+      "type": "project",
+      "path": "../../src/Libwebp.Net.csproj",
+      "msbuildProject": "../../src/Libwebp.Net.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net5.0": []
+    "net5.0": [
+      "Libwebp.Net >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\fodoo\\.nuget\\packages\\": {},
@@ -43,7 +62,11 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\src\\Libwebp.Net.csproj": {
+              "projectPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\src\\Libwebp.Net.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -70,7 +93,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

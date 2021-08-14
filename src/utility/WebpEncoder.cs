@@ -27,14 +27,28 @@ namespace Libwebp.Standard
         }
 
 
-        public async Task<FileStream> EncodeAsync(FileStream file)
+        public async Task<FileStream> EncodeAsync(MemoryStream memoryStream, string fileName)
         {
+
             //null check
-            if (file.Length == 0)
+            if (memoryStream == null)
                 throw new FileNotFoundException();
 
+            if (fileName == null)
+                throw new ArgumentNullException(fileName);
+
+            // Get user temp directory
+            var path = Path.GetTempPath();
+
+            //copy memorystream to 
+            FileStream fs = new FileStream(path + fileName, FileMode.Create, System.IO.FileAccess.Write);
+            memoryStream.WriteTo(fs);
+
             //pass the filestream to the filehelper for file operations
-            FileHelper.SetInputFileStream(file);
+            FileHelper.SetInputFileStream(fs);
+
+            //Dispose the FileStream !
+            await fs.DisposeAsync();
 
             //Construct the command from users configuration
             CommandBuilder command = new CommandBuilder(_configuration);
