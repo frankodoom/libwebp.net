@@ -38,11 +38,10 @@ C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\obj\Debug\net5.0\ref\web.d
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\obj\Debug\net5.0\web.pdb
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\obj\Debug\net5.0\web.genruntimeconfig.cache
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\obj\Debug\net5.0\web.csproj.CopyComplete
-C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\bin\Debug\net5.0\codecs\cwebp.exe
-C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\bin\Debug\net5.0\codecs\dwebp.exe
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\bin\Debug\net5.0\codecs\freeglut.dll
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\bin\Debug\net5.0\codecs\gif2webp.exe
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\bin\Debug\net5.0\codecs\vwebp.exe
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\bin\Debug\net5.0\codecs\webpmux.exe
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\bin\Debug\net5.0\Libwebp.Net.dll
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\bin\Debug\net5.0\Libwebp.Net.pdb
+C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\bin\Debug\net5.0\codecs\cwebp.exe

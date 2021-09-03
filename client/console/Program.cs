@@ -13,7 +13,9 @@ namespace console
                 .Build();
 
             var encoder = new WebpEncoder(config);
-            //encoder.EncodeAsync();
+
+            // create a n FS from a location
+
                  
         }
     }

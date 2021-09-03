@@ -11,11 +11,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="codecs\cwebp.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="codecs\cwebp.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="codecs\dwebp.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="codecs\freeglut.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -32,10 +35,6 @@
     <None Update="image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="temp\" />
   </ItemGroup>
 
 </Project>

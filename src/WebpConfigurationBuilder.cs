@@ -25,6 +25,9 @@ namespace Libwebp.Net
         /// <returns></returns>
         public WebpConfigurationBuilder Output(string value)
         {
+            //static helper workaround
+            FileHelper.FileOutput = value;
+
             if (value == null)
                 throw new OutputFileNameNotFoundException("Specify the name of the output WebP file. ");
             _config.Output = CommandPrefix.Output + Path.GetTempPath()+ value;

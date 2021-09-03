@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 namespace Libwebp.Net.utility
 {
     /// <summary>
-    ///  This class is a wrapper on some file IO
-    ///  operations making it easy to use 
+    ///  This class is an abstraction of some 
+    ///  file manipulation tasks
     /// </summary>
     public class FileHelper
     {
         private static FileStream InputFileStream { get; set; }
         private static FileStream OutputFileStream { get; set; }
+
+        //static work around for holding file output
+        public static string FileOutput { get; set; }
 
         //create FileStream  from Stream
         public static Task<FileStream> ReadFileFromStream(Stream stream)

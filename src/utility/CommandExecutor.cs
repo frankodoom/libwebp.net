@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,26 +23,32 @@ namespace Libwebp.Net.utility
         /// <returns>Filepath to convertedf ile</returns>
        public static async Task<FileStream> Execute(string Command)
         {
+
+            string assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string filePathRelativeToAssembly = Path.Combine(assemblyPath,"codecs/cwebp.exe");
+            string normalizedPath = Path.GetFullPath(filePathRelativeToAssembly);
+
             // Use ProcessStartInfo class
-            ProcessStartInfo startInfo = new ProcessStartInfo();
-            startInfo.CreateNoWindow = true;
-            startInfo.UseShellExecute = false;
-            startInfo.FileName = "codecs/cwebp.exe";
-            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            startInfo.Arguments = Command;
+            var startInfo = new ProcessStartInfo
+            {
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                FileName = normalizedPath,
+                WindowStyle = ProcessWindowStyle.Hidden,
+                Arguments = Command
+            };
 
             try
             {
                 // Start the process with the info we specified.
                 // Call WaitForExit and then the using statement will close.
-                using (Process exeProcess = Process.Start(startInfo))
+                using (Process webpProcess = Process.Start(startInfo))
                 {
-                    await exeProcess.WaitForExitAsync();
+                    await webpProcess.WaitForExitAsync();
  
-
                     //check if process exited if not kill process
-                    if (!exeProcess.HasExited)
-                        exeProcess.Kill();
+                    if (!webpProcess.HasExited)
+                        webpProcess.Kill();
                 }
             }
             catch(Exception ex)
@@ -50,8 +57,7 @@ namespace Libwebp.Net.utility
             }
 
             //get output stream from converted .webp tempfile 
-
-            var path = Path.GetTempPath()+ "output.webp" ;
+            var path = Path.GetTempPath()+FileHelper.FileOutput;
 
             using var file = new FileStream(path, FileMode.Open, FileAccess.Read);
 

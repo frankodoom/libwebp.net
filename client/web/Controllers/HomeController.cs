@@ -1,4 +1,5 @@
 ﻿using Libwebp.Net;
+using Libwebp.Net.utility;
 using Libwebp.Standard;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,18 +36,33 @@ namespace web.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadAsync(IFormFile file)
         {
-              
-            // get file as memory stream
+
+            if (file == null)
+                throw new FileNotFoundException();
+          
+            //you can handle file checks ie. extensions size etc..
+            
+            //get file as memory stream
             var ms = new MemoryStream();
                 file.CopyTo(ms);
 
+            // create your webp configuration
             var config = new WebpConfigurationBuilder()
-               .Output("output.webp")
+               .Preset(Preset.PHOTO)
+               .Output($"{Path.GetFileNameWithoutExtension(file.FileName)}.webp")
                .Build();
 
+            //create an encoder and pass in your configuration
             var encoder = new WebpEncoder(config);
+
+            //call the encoder and pass in the Memorystream and FileName
+            //the encoder after encoding will return a FileStream of the output
             var myFile = await encoder.EncodeAsync(ms, file.FileName);
 
+            /*Do whatever you want with the file....download, copy to disk or 
+              save to cloud*/
+          
+                                                                                                 
             return Content(myFile.Name.ToString());
         }
 
