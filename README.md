@@ -3,6 +3,8 @@
  
  # Using the Library
  
+ ### 
+ 
  ```csharp
    // create your WebP Configuration using fluent builder 
             var configuration = new WebpConfigurationBuilder()
@@ -17,6 +19,43 @@
             FileStream fileStream =  await codec.EncodeAsync("image.png"); 
             
             //...create your file by copying or downloading..etc   
+```
+
+### Asp.Net Core Controller
+ 
+ ```csharp
+  public async Task<IActionResult> UploadAsync(IFormFile file)
+        {
+
+            if (file == null)
+                throw new FileNotFoundException();
+
+            //you can handle file checks ie. extensions size etc..
+            var oFileName = $"{Path.GetFileNameWithoutExtension(file.FileName)}.webp";
+
+            //get file as memory stream
+            var ms = new MemoryStream();
+                file.CopyTo(ms);
+
+            // create your webp configuration
+            var config = new WebpConfigurationBuilder()
+               .Preset(Preset.PHOTO)
+               .Output(oFileName)
+               .Build();
+
+            //create an encoder and pass in your configuration
+            var encoder = new WebpEncoder(config);
+
+            //call the encoder and pass in the Memorystream and FileName
+            //the encoder after encoding will return a FileStream output
+            //Optional cast to Stream to return file for download
+            Stream fs = await encoder.EncodeAsync(ms, file.FileName);
+
+            /*Do whatever you want with the file....download, copy to disk or 
+              save to cloud*/
+
+            return File(fs, "application/octet-stream", oFileName);
+        }   
 ```
 
 # Advanced Encoding
