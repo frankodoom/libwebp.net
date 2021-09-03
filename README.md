@@ -1,5 +1,5 @@
 # libwebp.net
- An asynchronuous crossplatform utility for encoding images to Google's .webp format for faster image rendering in Asp.Net Wep Apps. Seemlessly convert uploaded images to lossless  formats to improve network performance in your web applications and reduce file size on disk. 
+ An asynchronuous crossplatform utility for encoding images to Google's .webp format for faster image rendering in Asp.Net Wep Apps. Seemlessly convert uploaded images to lossless  formats to improve network performance and reduce file size on disk. 
  
  # Using the Library
 
@@ -13,6 +13,11 @@
                 throw new FileNotFoundException();
 
             //you can handle file checks ie. extensions size etc..
+            
+            //creating output file name
+            // your name can be a unique Guid or any name of your choice with .webp extension..eg output.webp
+            //in my case i am removing the extension from the uploaded file and appending
+            // the .webp extension
             var oFileName = $"{Path.GetFileNameWithoutExtension(file.FileName)}.webp";
 
             // create your webp configuration
@@ -21,15 +26,16 @@
                .Output(oFileName)
                .Build();
             
-           //copy file to  memory stream
-            var ms = new MemoryStream();
-                file.CopyTo(ms);
-
             //create an encoder and pass in your configuration
             var encoder = new WebpEncoder(config);
-
-            //call the encoder and pass in the Memorystream and FileName
+            
+           //copy file to memory stream
+            var ms = new MemoryStream();
+                     file.CopyTo(ms);
+            
+            //call the encoder and pass in the Memorystream and input FileName
             //the encoder after encoding will return a FileStream output
+            
             //Optional cast to Stream to return file for download
             Stream fs = await encoder.EncodeAsync(ms, file.FileName);
 
