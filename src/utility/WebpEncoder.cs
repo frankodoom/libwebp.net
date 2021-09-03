@@ -48,7 +48,7 @@ namespace Libwebp.Standard
             FileHelper.SetInputFileStream(fs);
 
             //Dispose the FileStream !
-            await fs.DisposeAsync();
+            //await fs.DisposeAsync();
 
             //Construct the command from users configuration
             CommandBuilder command = new CommandBuilder(_configuration);

@@ -59,7 +59,7 @@ namespace Libwebp.Net.utility
             //get output stream from converted .webp tempfile 
             var path = Path.GetTempPath()+FileHelper.FileOutput;
 
-            using var file = new FileStream(path, FileMode.Open, FileAccess.Read);
+            var file = new FileStream(path, FileMode.Open, FileAccess.Read);
 
             return await Task.FromResult(file);
         }
