@@ -37,4 +37,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="production\" />
+  </ItemGroup>
+
 </Project>

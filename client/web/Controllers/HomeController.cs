@@ -34,7 +34,7 @@ namespace web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UploadAsync(IFormFile file)
+        public async Task<IActionResult> ConvertAsync(IFormFile file)
         {
 
             if (file == null)
