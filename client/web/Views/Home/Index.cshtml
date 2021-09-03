@@ -3,23 +3,44 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Libwebp.NET Web Client</h1>
-    <p>A demo client for testing libwebp.net library in Asp.Net Core</p>
+    <img src="~/images/webplogo.png"  style="margin-top:100px"/>
+@*    <h1 class="display-4">Libwebp.NET</h1>*@
+    <p>Upload your image and convert to Google's WebP Format</p>
     <br />
-    <br />
+    <style>
+        .form-control-borderless {
+            border: none;
+        }
 
-   <div>
-    <form action="Home/Convert" method="post" enctype="multipart/form-data">
-        <div class="row">
-            <div class="form-group">
-                <input type="file" name="file" value="file" class="form-control-file" />
+            .form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
+                border: none;
+                outline: none;
+                box-shadow: none;
+            }
+    </style>
+    <div class="container">
+        <br />
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <form class="card card-sm" action="Home/Convert" method="post" enctype="multipart/form-data">
+                    <div class="card-body row no-gutters align-items-center">
+                        @*<div class="col-auto">
+                                <i class="fas fa-file h4 text-body"></i>
+                            </div>*@
+                        <!--end of col-->
+                        <div class="col">
+                            <input class="form-control form-control-file form-control-lg form-control-borderless" type="file" name="file" value="file">
+                        </div>
+                        <!--end of col-->
+                        <div class="col-auto">
+                            <button class="btn btn-lg btn-success" type="submit"><i class="fas fa-cog"></i></button>
+                        </div>
+                        <!--end of col-->
+                    </div>
+                </form>
             </div>
+            <!--end of col-->
+
         </div>
-        <div class="row">
-            <div class="form-group">
-                <input type="submit" class="btn btn-info" value="Convert to Webp" />
-            </div>
-        </div>
-   </form>
+    </div>
 </div>
-  </div>

@@ -45,10 +45,11 @@ namespace Libwebp.Net.utility
                 using (Process webpProcess = Process.Start(startInfo))
                 {
                     await webpProcess.WaitForExitAsync();
- 
+
                     //check if process exited if not kill process
                     if (!webpProcess.HasExited)
                         webpProcess.Kill();
+                       
                 }
             }
             catch(Exception ex)
@@ -60,6 +61,7 @@ namespace Libwebp.Net.utility
             var path = Path.GetTempPath()+FileHelper.FileOutput;
 
             var file = new FileStream(path, FileMode.Open, FileAccess.Read);
+      
 
             return await Task.FromResult(file);
         }

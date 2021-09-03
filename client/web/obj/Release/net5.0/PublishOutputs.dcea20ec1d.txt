@@ -6,6 +6,7 @@ C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\obj\Release\net5.0\PubTmp\
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\obj\Release\net5.0\PubTmp\Out\codecs\webpmux.exe
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\obj\Release\net5.0\PubTmp\Out\wwwroot\css\site.css
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\obj\Release\net5.0\PubTmp\Out\wwwroot\favicon.ico
+C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\obj\Release\net5.0\PubTmp\Out\wwwroot\images\webplogo.png
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\obj\Release\net5.0\PubTmp\Out\wwwroot\js\site.js
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\obj\Release\net5.0\PubTmp\Out\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\web\obj\Release\net5.0\PubTmp\Out\wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map

@@ -40,13 +40,14 @@ namespace web.Controllers
             if (file == null)
                 throw new FileNotFoundException();
 
-            //you can handle file checks ie. extensions size etc..
+            //Todo can handle file checks ie. extensions size etc..
+
             var oFileName = $"{Path.GetFileNameWithoutExtension(file.FileName)}.webp";
 
             //get file as memory stream
-            var ms = new MemoryStream();
-                file.CopyTo(ms);
-
+            using var ms = new MemoryStream();
+                     file.CopyTo(ms);
+                 
             // create your webp configuration
             var config = new WebpConfigurationBuilder()
                .Preset(Preset.PHOTO)
@@ -60,11 +61,11 @@ namespace web.Controllers
             //the encoder after encoding will return a FileStream output
             //Optional cast to Stream to return file for download
             Stream fs = await encoder.EncodeAsync(ms, file.FileName);
-
+                        
             /*Do whatever you want with the file....download, copy to disk or 
               save to cloud*/
 
-            return File(fs, "application/octet-stream", oFileName);
+            return  File(fs, "application/octet-stream", oFileName);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

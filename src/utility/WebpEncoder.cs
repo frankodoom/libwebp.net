@@ -41,14 +41,15 @@ namespace Libwebp.Standard
             var path = Path.GetTempPath();
 
             //copy memorystream to 
-            FileStream fs = new FileStream(path + fileName, FileMode.Create, System.IO.FileAccess.Write);
+            FileStream fs = new FileStream(path + fileName, FileMode.Create, System.IO.FileAccess.Write, FileShare.None);
             memoryStream.WriteTo(fs);
+            fs.Close();
 
             //pass the filestream to the filehelper for file operations
             FileHelper.SetInputFileStream(fs);
 
             //Dispose the FileStream !
-            //await fs.DisposeAsync();
+            await fs.DisposeAsync();
 
             //Construct the command from users configuration
             CommandBuilder command = new CommandBuilder(_configuration);
