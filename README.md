@@ -2,8 +2,45 @@
  An asynchronuous crossplatform utility for encoding images to Google's .webp format for faster image rendering in Asp.Net web applications. Seemlessly convert uploaded images to lossless formats to improve network performance and reduce file size on disk. You can see the library in action by uploading your image and converting it using the [webclient](http://libwebp.azurewebsites.net/) , your .webp result will be downloaded in your browser.
  
  # Using the Library
+ 
+### General Usage
+Below shows the basic usage of the library using a console app.
+ 
+ ```csharp
+   class Program
+    {
+        static async Task Main(string[] args)
+        {
+
+            // get file to encode
+            using var file = new FileStream(@"C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\console\logo.png", FileMode.Open);
+
+            // copy file to Memory
+            using var ms = new MemoryStream();
+            await file.CopyToAsync(ms);
+           
+           //setup configuration for the encoder
+           var config = new WebpConfigurationBuilder()
+                        .Output("output.webp")
+                        .Build();
+                        
+            // create an encoder and pass in the configuration
+            var encoder = new WebpEncoder(config);
+
+            // start encoding by passing your memorystream and filename      
+            var output = await encoder.EncodeAsync(ms, Path.GetFileName(file.Name));
+
+            /* your converted file is returned as FileStream, do what you want download, copy to disk, write to db
+              or save on cloud storage,*/  
+              
+            Console.WriteLine($"Your output file : {Path.GetFileName(output.Name)}");
+            Console.WriteLine($"Length in bytes : {output.Length}");
+       }
+    }
+```
 
 ### Asp.Net Core 
+Below demonstrates how to use the library in Asp.Net Core controller.
  
  ```csharp
   public async Task<IActionResult> UploadAsync(IFormFile file)
