@@ -13,7 +13,7 @@ Below shows the basic usage of the library using a console app.
         {
 
        // get file to encode
-       using var file = new FileStream(@"C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\client\console\logo.png", FileMode.Open);
+       using var file = new FileStream(@"C:\Users\fodoo\Desktop\logo.png", FileMode.Open);
 
        // copy file to Memory
         using var ms = new MemoryStream();
