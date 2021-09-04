@@ -30,8 +30,8 @@ Below shows the basic usage of the library using a console app.
         // start encoding by passing your memorystream and filename      
         var output = await encoder.EncodeAsync(ms, Path.GetFileName(file.Name));
 
-        /* your converted file is returned as FileStream, do what you want download, copy to disk, write to db
-         or save on cloud storage,*/  
+        /* your converted file is returned as FileStream, do what you want download,
+           copy to disk, write to db or save on cloud storage,*/  
               
          Console.WriteLine($"Your output file : {Path.GetFileName(output.Name)}");
          Console.WriteLine($"Length in bytes : {output.Length}");
