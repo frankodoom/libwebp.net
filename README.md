@@ -1,5 +1,5 @@
 # libwebp.net
-An asynchronuous crossplatform utility for encoding images to Google's [.webp](https://developers.google.com/speed/webp) format. Seemlessly compress images to lossy and lossless formats in your .NET projects to improve network performance and reduce file size on disk. You can see the library in action by using the [webclient](http://libwebp.azurewebsites.net/) , your .webp result will be downloaded in your browser.
+An asynchronuous crossplatform utility for encoding images to Google's [.webp](https://developers.google.com/speed/webp) format. Seemlessly compress images to lossy and lossless formats in your .NET projects to improve network performance and reduce file size on disk. WebP generally has better compression than JPEG, PNG and GIF and is designed to supersede them. You can see the library in action by using the [webclient](http://libwebp.azurewebsites.net/) , your result will be downloaded into your browser.
  
  # Using the Library
  
@@ -40,7 +40,7 @@ Below shows the basic use of the library using a console app.
 ```
 
 ### Asp.Net Core 
-Below demonstrates how to use the library in Asp.Net Core controller.
+Below demonstrates how the library is used in Asp.Net Core to convert uploaded images.
  
  ```csharp
   public async Task<IActionResult> UploadAsync(IFormFile file)
