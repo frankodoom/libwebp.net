@@ -4,7 +4,7 @@ An asynchronuous crossplatform utility for encoding images to Google's .webp for
  # Using the Library
  
 ### General Usage
-Below shows the basic usage of the library using a console app.
+Below shows the basic use of the library using a console app.
  
  ```csharp
    class Program
