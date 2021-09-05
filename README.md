@@ -7,10 +7,10 @@ An asynchronuous crossplatform utility for encoding images to Google's .webp for
 Below shows the basic use of the library using a console app.
  
  ```csharp
-   class Program
-    {
-        static async Task Main(string[] args)
-        {
+  class Program
+   {
+     static async Task Main(string[] args)
+      {
 
        // get file to encode
        using var file = new FileStream(@"C:\Users\fodoo\Desktop\logo.png", FileMode.Open);
