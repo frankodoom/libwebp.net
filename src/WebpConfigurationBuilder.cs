@@ -30,7 +30,7 @@ namespace Libwebp.Net
 
             if (value == null)
                 throw new OutputFileNameNotFoundException("Specify the name of the output WebP file. ");
-            _config.Output = CommandPrefix.Output + Path.GetTempPath()+ value;
+            _config.Output =  CommandPrefix.Output + string.Format("\"{0}\"", Path.GetTempPath()+ value);
             return this;
         }
 

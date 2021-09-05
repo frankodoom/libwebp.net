@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="production\" />
+    <Folder Include="dist\" />
   </ItemGroup>
 
 </Project>

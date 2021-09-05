@@ -42,14 +42,13 @@ namespace Libwebp.Net.utility
             {
                 // Start the process with the info we specified.
                 // Call WaitForExit and then the using statement will close.
-                using (Process webpProcess = Process.Start(startInfo))
+                using (Process cwebp = Process.Start(startInfo))
                 {
-                    await webpProcess.WaitForExitAsync();
+                    await cwebp.WaitForExitAsync();
 
                     //check if process exited if not kill process
-                    if (!webpProcess.HasExited)
-                        webpProcess.Kill();
-                       
+                    if (!cwebp.HasExited)
+                        cwebp.Kill();                
                 }
             }
             catch(Exception ex)

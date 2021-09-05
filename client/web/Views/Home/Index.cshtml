@@ -29,18 +29,51 @@
                             </div>*@
                         <!--end of col-->
                         <div class="col">
-                            <input class="form-control form-control-file form-control-lg form-control-borderless" type="file" name="file" value="file">
+                            <input id="file" onchange="checkfile()" required class="form-control form-control-file form-control-lg form-control-borderless" type="file" name="file" value="file">
                         </div>
                         <!--end of col-->
                         <div class="col-auto">
-                            <button class="btn btn-lg btn-success" type="submit"><i class="fas fa-cog"></i></button>
+                            <button class="btn btn-lg btn-info" hidden="hidden" id="configure" type="submit"><i class="fas fa-wrench"></i></button>
+                            <button class="btn btn-lg btn-success" id="convert" type="submit"><i id="cog" class="fas fa-cog"></i></button>
                         </div>
                         <!--end of col-->
                     </div>
                 </form>
             </div>
             <!--end of col-->
-
         </div>
     </div>
 </div>
+
+@section Scripts{ 
+
+<script>
+    var file = $("#file");
+    var convert = $("#convert");
+   function checkfile(){
+        if (file.length>0)
+            $("#configure").removeAttr("hidden");
+    }
+
+    convert.on("click", function () {
+        $("#cog").addClass("fa-spin");
+        $("form").submit(function () {
+            $("#cog").removeClass("fa-spin");
+        });
+    })
+
+    function checkCookie() {
+        var cookieVal = $.cookie($("input[name='windowid']").val());
+        if (cookieVal == null || cookieVal === 'undefined') {
+            setTimeout("checkCookie();", 1000);
+        }
+        else {
+            $(".working").hide();
+            $(".input-form").show();
+            $("form")[0].reset();
+        }
+    }
+
+</script>
+
+}

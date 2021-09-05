@@ -61,10 +61,10 @@ namespace web.Controllers
             //the encoder after encoding will return a FileStream output
             //Optional cast to Stream to return file for download
             Stream fs = await encoder.EncodeAsync(ms, file.FileName);
-                        
+
             /*Do whatever you want with the file....download, copy to disk or 
               save to cloud*/
-
+         
             return  File(fs, "application/octet-stream", oFileName);
         }
 

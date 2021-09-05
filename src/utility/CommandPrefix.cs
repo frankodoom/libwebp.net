@@ -17,6 +17,9 @@ namespace Libwebp.Net.utility
         public const string TargetSize = "-size ";
         public const string TPSNR = "-psnr ";
         public const string Lossless = "-lossless ";
+        public const string InputSize = "-s ";
+        public const string SpatialNoiceShaping = "-sns";
+        public const string Filter = "-f";
 
     }
 }

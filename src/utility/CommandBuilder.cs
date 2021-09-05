@@ -24,7 +24,7 @@ namespace Libwebp.Net.utility
         {
             //initialize and construct  arguments in order of execution
             string[] args = new string[20];
-            args[0] = FileHelper.GetInputFileStream().Name;
+            args[0] = string.Format("\"{0}\"",FileHelper.GetInputFileStream().Name);
             args[1] = configuration.Preset;
             args[2] = configuration.Lossless;
             args[3] = configuration.Output;

@@ -18,7 +18,7 @@ namespace Libwebp.Standard
         private WebPConfiguration _configuration { get; set; }
         /// <summary>
         /// public constructor that accepts the configuration
-        /// and uses it through out the encode and decode process
+        /// and uses it through out the encode process
         /// </summary>
         /// <param name="configuration"></param>
         public WebpEncoder(WebPConfiguration configuration)
@@ -40,8 +40,8 @@ namespace Libwebp.Standard
             // Get user temp directory
             var path = Path.GetTempPath();
 
-            //copy memorystream to 
-            FileStream fs = new FileStream(path + fileName, FileMode.Create, System.IO.FileAccess.Write, FileShare.None);
+            //write file in memory to temp location on server
+            FileStream fs = new FileStream(path + fileName.Trim(), FileMode.Create, FileAccess.Write, FileShare.None);
             memoryStream.WriteTo(fs);
             fs.Close();
 

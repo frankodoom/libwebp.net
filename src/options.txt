@@ -3,8 +3,7 @@ assumed to be a PNG, JPEG, TIFF or WebP file.
 Windows builds can take as input any of the files handled by WIC.
 
 Options:
-  -h / -help  ............ short help
-  -H / -longhelp  ........ long help
+
   -q <float> ............. quality factor (0:small..100:big)
   -alpha_q <int> ......... transparency-compression quality (0..100)
   -preset <string> ....... preset setting, one of:
