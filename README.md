@@ -1,5 +1,5 @@
 # libwebp.net
-An asynchronuous utility for encoding images to Google's [.webp](https://developers.google.com/speed/webp) format. Seemlessly compress images to lossy and lossless formats in your .NET projectsto improve network performance and reduce file size on disk. WebP generally has better compression than JPEG, PNG and GIF and is designed to supersede them. You can see the library in action by using the [webclient](http://libwebp.azurewebsites.net/) , your result will be downloaded into your browser.
+An asynchronuous utility for encoding images to Google's [.webp](https://developers.google.com/speed/webp) format. Seemlessly compress images to lossy and lossless formats in your .NET projects to improve network performance and reduce file size on disk. WebP generally has better compression than JPEG, PNG and GIF and is designed to supersede them. You can see the library in action by using the [webclient](http://libwebp.azurewebsites.net/) , your result will be downloaded into your browser.
  
  # Using the Library
  
