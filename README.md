@@ -107,7 +107,7 @@ The encoder contains a lot advanced parameters. LibWebP.Net supports libWebp's a
 ### Options
  These options are currently supported in the library, use it to manipulate the compression algorithm for your desired output.
  
-| Command | Description |
+| Option | Description |
 | --- | --- |
 | `AlphaQ(int value)` | transparency-compression quality (0..100) |
 | `CompressionMethod(int value)` | compression method (0=fast, 6=slowest) |
