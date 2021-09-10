@@ -28,8 +28,7 @@
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "C:\\Users\\fodoo\\Desktop": {}
         },
         "frameworks": {
           "net5.0": {
@@ -70,7 +69,7 @@
       }
     },
     "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\src\\Libwebp.Net.csproj": {
-      "version": "1.0.0",
+      "version": "0.9.0",
       "restore": {
         "projectUniqueName": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\src\\Libwebp.Net.csproj",
         "projectName": "Libwebp.Net",
@@ -93,8 +92,7 @@
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "C:\\Users\\fodoo\\Desktop": {}
         },
         "frameworks": {
           "net5.0": {

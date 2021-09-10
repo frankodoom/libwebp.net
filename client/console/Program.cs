@@ -1,7 +1,10 @@
-﻿using Libwebp.Net;
+﻿
+using Libwebp.Net;
 using Libwebp.Standard;
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace console
@@ -32,13 +35,12 @@ namespace console
             // pass the inmemory file to the encoder      
             var output = await encoder.EncodeAsync(ms, Path.GetFileName(file.Name));
 
-            /* your converted file is returned as FileStream, do what you want download, copy to disk
-              or save on cloud storage*/
-      
-            Console.WriteLine($"Your output file : {Path.GetFileName(output.Name)}");
+           /* your converted file is returned as FileStream, do what you want download, copy to disk
+             or save on cloud storage*/
+
+             Console.WriteLine($"Your output file : {Path.GetFileName(output.Name)}");
             Console.WriteLine($"Length in bytes : {output.Length}");
             Console.WriteLine($"You saved {file.Length - output.Length} bytes after compression");
-
 
         }
     }

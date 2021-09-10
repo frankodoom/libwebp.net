@@ -1,13 +1,8 @@
-C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\bin\Release\net5.0\codecs\freeglut.dll
-C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\bin\Release\net5.0\codecs\gif2webp.exe
-C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\bin\Release\net5.0\codecs\vwebp.exe
-C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\bin\Release\net5.0\codecs\webpmux.exe
-C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\bin\Release\net5.0\codecs\cwebp.exe
+C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\bin\Release\net5.0\codecs\windows\freeglut.dll
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\bin\Release\net5.0\Libwebp.Net.deps.json
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\bin\Release\net5.0\Libwebp.Net.dll
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\bin\Release\net5.0\ref\Libwebp.Net.dll
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\bin\Release\net5.0\Libwebp.Net.pdb
-C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Release\net5.0\Libwebp.Net.csproj.AssemblyReference.cache
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Release\net5.0\Libwebp.Net.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Release\net5.0\Libwebp.Net.AssemblyInfoInputs.cache
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Release\net5.0\Libwebp.Net.AssemblyInfo.cs
@@ -15,3 +10,5 @@ C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Release\net5.0\Libwebp.Net.cs
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Release\net5.0\Libwebp.Net.dll
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Release\net5.0\ref\Libwebp.Net.dll
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Release\net5.0\Libwebp.Net.pdb
+C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Release\net5.0\Libwebp.Net.csproj.AssemblyReference.cache
+C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\bin\Release\net5.0\codecs\windows\cwebp.exe

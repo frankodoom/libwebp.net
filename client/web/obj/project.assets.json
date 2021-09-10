@@ -2,28 +2,33 @@
   "version": 3,
   "targets": {
     "net5.0": {
-      "Libwebp.Net/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
+      "Libwebp.Net/0.9.0": {
+        "type": "package",
         "compile": {
-          "bin/placeholder/Libwebp.Net.dll": {}
+          "lib/net5.0/Libwebp.Net.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Libwebp.Net.dll": {}
+          "lib/net5.0/Libwebp.Net.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "Libwebp.Net/1.0.0": {
-      "type": "project",
-      "path": "../../src/Libwebp.Net.csproj",
-      "msbuildProject": "../../src/Libwebp.Net.csproj"
+    "Libwebp.Net/0.9.0": {
+      "sha512": "rWz03JfHqnPOzgYD7/fh5lIsFOlXbmQqCt4LIR56cAoOwceW59SxtOr8jKNDeNeoAoUNiwp9inUA1AFiQvb3Lw==",
+      "type": "package",
+      "path": "libwebp.net/0.9.0",
+      "files": [
+        ".nupkg.metadata",
+        "lib/net5.0/Libwebp.Net.dll",
+        "libwebp.net.0.9.0.nupkg.sha512",
+        "libwebp.net.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "Libwebp.Net >= 1.0.0"
+      "Libwebp.Net >= 0.9.0"
     ]
   },
   "packageFolders": {
@@ -56,17 +61,12 @@
         "net5.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "C:\\Users\\fodoo\\Desktop": {}
       },
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {
-            "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\src\\Libwebp.Net.csproj": {
-              "projectPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\src\\Libwebp.Net.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -78,6 +78,12 @@
     "frameworks": {
       "net5.0": {
         "targetAlias": "net5.0",
+        "dependencies": {
+          "Libwebp.Net": {
+            "target": "Package",
+            "version": "[0.9.0, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",

@@ -24,16 +24,29 @@ namespace Libwebp.Net.utility
        public static async Task<FileStream> Execute(string Command)
         {
 
-            string assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string filePathRelativeToAssembly = Path.Combine(assemblyPath,"codecs/cwebp.exe");
-            string normalizedPath = Path.GetFullPath(filePathRelativeToAssembly);
+            //fetch codec
+            using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Libwebp.Net.codecs.windows.cwebp.exe");
+
+            //copy codec to memory
+            using var ms = new MemoryStream();
+            stream.CopyTo(ms);
+
+            // Get user temp directory
+            var path0 = Path.GetTempPath();
+            
+            //write codec to temp location on server if file does not exist when FIleMode is set to OpenOrCreate
+            using var fs = new FileStream(path0 + "cwebp.exe", FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
+            ms.WriteTo(fs);
+            fs.Close();
+
+            //use codec from temp
 
             // Use ProcessStartInfo class
             var startInfo = new ProcessStartInfo
             {
                 CreateNoWindow = true,
                 UseShellExecute = false,
-                FileName = normalizedPath,
+                FileName = fs.Name,
                 WindowStyle = ProcessWindowStyle.Hidden,
                 Arguments = Command
             };
@@ -53,16 +66,17 @@ namespace Libwebp.Net.utility
             }
             catch(Exception ex)
             {
-                throw new CommandExecutionException("Something went wrong executing the command: " + ex.Message, ex.InnerException);
+                throw new CommandExecutionException("Command Executor Failed: " + ex.Message, ex.InnerException);
             }
 
             //get output stream from converted .webp tempfile 
             var path = Path.GetTempPath()+FileHelper.FileOutput;
-
             var file = new FileStream(path, FileMode.Open, FileAccess.Read);
       
-
             return await Task.FromResult(file);
         }
+
+
+  
     }
 }

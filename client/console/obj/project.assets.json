@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net5.0": {
-      "Libwebp.Net/1.0.0": {
+      "Libwebp.Net/0.9.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "compile": {
@@ -15,7 +15,7 @@
     }
   },
   "libraries": {
-    "Libwebp.Net/1.0.0": {
+    "Libwebp.Net/0.9.0": {
       "type": "project",
       "path": "../../src/Libwebp.Net.csproj",
       "msbuildProject": "../../src/Libwebp.Net.csproj"
@@ -23,7 +23,7 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "Libwebp.Net >= 1.0.0"
+      "Libwebp.Net >= 0.9.0"
     ]
   },
   "packageFolders": {
@@ -56,8 +56,7 @@
         "net5.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "C:\\Users\\fodoo\\Desktop": {}
       },
       "frameworks": {
         "net5.0": {
