@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v5.0": {
-      "Libwebp.Net/0.9.0": {
+      "Libwebp.Net/0.9.1": {
         "runtime": {
           "Libwebp.Net.dll": {}
         }
@@ -14,7 +14,7 @@
     }
   },
   "libraries": {
-    "Libwebp.Net/0.9.0": {
+    "Libwebp.Net/0.9.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

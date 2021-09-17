@@ -3,20 +3,35 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.9.0</Version>
+    <Version>0.9.1</Version>
+    <Description>An asynchronuous utility for encoding images to Google's .webp format. Seemlessly compress images to lossy and lossless formats in your .NET projects to improve network performance and reduce file size on disk. WebP generally has better compression than JPEG, PNG and GIF and is designed to supersede them. You can see the library in action by using the webclient , your result will be downloaded into your browser.</Description>
+    <Copyright>Copyright 2021</Copyright>
+    <PackageProjectUrl>https://github.com/frankodoom/libwebp.net</PackageProjectUrl>
+    <PackageTags>google, dotnet, webp, file-format, compress-images, asp-net-core, image-compression, dotnet-standard, encoding-convertors, encoding-library, dotnet-standand</PackageTags>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <RepositoryUrl>https://github.com/frankodoom/libwebp.net</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="bin\**" />
+    <Compile Remove="dist\**" />
     <EmbeddedResource Remove="bin\**" />
+    <EmbeddedResource Remove="dist\**" />
     <None Remove="bin\**" />
+    <None Remove="dist\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="codecs\linux\cwebp" />
+    <None Remove="codecs\linux\cwebp.sh" />
     <None Remove="codecs\windows\cwebp.exe" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="codecs\linux\cwebp.sh">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="codecs\windows\cwebp.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -29,10 +44,6 @@
     <None Update="image.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="dist\" />
   </ItemGroup>
 
   <ItemGroup>

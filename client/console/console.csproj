@@ -20,10 +20,4 @@
     <ProjectReference Include="..\..\src\Libwebp.Net.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="DummyBin">
-      <HintPath>..\..\DummyBin\bin\Debug\net5.0\DummyBin.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

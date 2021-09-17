@@ -34,7 +34,6 @@ namespace Libwebp.Net
             return this;
         }
 
-
         /**/
         /// <summary>
         /// quality factor (0:small..100:big)
@@ -67,7 +66,6 @@ namespace Libwebp.Net
             _config.CompressionMethod = CommandPrefix.CompressionMethod + value;
             return this;
         }
-
         public WebpConfigurationBuilder Lossless()
         {           
            _config.Lossless = CommandPrefix.Lossless;

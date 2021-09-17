@@ -8,18 +8,15 @@
     ".NETCoreApp,Version=v5.0": {
       "console/1.0.0": {
         "dependencies": {
-          "DummyBin": "1.0.0.0"
+          "Libwebp.Net": "0.9.1"
         },
         "runtime": {
           "console.dll": {}
         }
       },
-      "DummyBin/1.0.0.0": {
+      "Libwebp.Net/0.9.1": {
         "runtime": {
-          "DummyBin.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Libwebp.Net.dll": {}
         }
       }
     }
@@ -30,8 +27,8 @@
       "serviceable": false,
       "sha512": ""
     },
-    "DummyBin/1.0.0.0": {
-      "type": "reference",
+    "Libwebp.Net/0.9.1": {
+      "type": "project",
       "serviceable": false,
       "sha512": ""
     }

@@ -14,7 +14,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "0.9.0",
+    "version": "0.9.1",
     "restore": {
       "projectUniqueName": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\src\\Libwebp.Net.csproj",
       "projectName": "Libwebp.Net",

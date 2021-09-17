@@ -33,7 +33,7 @@
     ".NETCoreApp,Version=v5.0": {
       "web/1.0.0": {
         "dependencies": {
-          "Libwebp.Net": "1.0.0",
+          "Libwebp.Net": "0.9.1",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Cookies": "5.0.0.0",
@@ -325,12 +325,15 @@
           "web.dll": {}
         }
       },
-      "Libwebp.Net/1.0.0": {
+      "Libwebp.Net/0.9.1": {
         "runtime": {
-          "Libwebp.Net.dll": {}
+          "lib/net5.0/Libwebp.Net.dll": {
+            "assemblyVersion": "0.9.1.0",
+            "fileVersion": "0.9.1.0"
+          }
         },
         "compile": {
-          "Libwebp.Net.dll": {}
+          "lib/net5.0/Libwebp.Net.dll": {}
         }
       },
       "Microsoft.AspNetCore.Antiforgery/5.0.0.0": {
@@ -2039,10 +2042,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Libwebp.Net/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
+    "Libwebp.Net/0.9.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zYdQB+9pcxIgUOVOd9UXcnk7KB7ofM3udJ6oCMkZQLQ2McNwpd2VO/P9ZxZUppOZnsktbGub+UZn9OaPsIVm/Q==",
+      "path": "libwebp.net/0.9.1",
+      "hashPath": "libwebp.net.0.9.1.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Antiforgery/5.0.0.0": {
       "type": "referenceassembly",

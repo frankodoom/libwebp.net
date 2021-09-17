@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net5.0": {
-      "Libwebp.Net/0.9.0": {
+      "Libwebp.Net/0.9.1": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "compile": {
@@ -15,7 +15,7 @@
     }
   },
   "libraries": {
-    "Libwebp.Net/0.9.0": {
+    "Libwebp.Net/0.9.1": {
       "type": "project",
       "path": "../../src/Libwebp.Net.csproj",
       "msbuildProject": "../../src/Libwebp.Net.csproj"
@@ -23,7 +23,7 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "Libwebp.Net >= 0.9.0"
+      "Libwebp.Net >= 0.9.1"
     ]
   },
   "packageFolders": {

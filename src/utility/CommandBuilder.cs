@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Libwebp.Net.utility
 {
-
     /* LibWebP Command Builder
        © 2021 Frank Arkhurst Odoom
        This class is responsible for recieving the WebPConfiguration options 
@@ -37,7 +36,10 @@ namespace Libwebp.Net.utility
         private void Build(string[] args)
         {
             //initialize the base command
-            Command = new StringBuilder($"cwebp ");
+            if(OperatingSystem.IsWindows())
+              Command = new StringBuilder($"cwebp ");
+            if(OperatingSystem.IsLinux())
+                Command = new StringBuilder($"./cwebp.sh cwebp ");
 
             List<string> userargs = new List<string>();
 

@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net5.0": {
-      "Libwebp.Net/0.9.0": {
+      "Libwebp.Net/0.9.1": {
         "type": "package",
         "compile": {
           "lib/net5.0/Libwebp.Net.dll": {}
@@ -14,21 +14,21 @@
     }
   },
   "libraries": {
-    "Libwebp.Net/0.9.0": {
-      "sha512": "rWz03JfHqnPOzgYD7/fh5lIsFOlXbmQqCt4LIR56cAoOwceW59SxtOr8jKNDeNeoAoUNiwp9inUA1AFiQvb3Lw==",
+    "Libwebp.Net/0.9.1": {
+      "sha512": "zYdQB+9pcxIgUOVOd9UXcnk7KB7ofM3udJ6oCMkZQLQ2McNwpd2VO/P9ZxZUppOZnsktbGub+UZn9OaPsIVm/Q==",
       "type": "package",
-      "path": "libwebp.net/0.9.0",
+      "path": "libwebp.net/0.9.1",
       "files": [
         ".nupkg.metadata",
         "lib/net5.0/Libwebp.Net.dll",
-        "libwebp.net.0.9.0.nupkg.sha512",
+        "libwebp.net.0.9.1.nupkg.sha512",
         "libwebp.net.nuspec"
       ]
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "Libwebp.Net >= 0.9.0"
+      "Libwebp.Net >= 0.9.1"
     ]
   },
   "packageFolders": {
@@ -81,7 +81,7 @@
         "dependencies": {
           "Libwebp.Net": {
             "target": "Package",
-            "version": "[0.9.0, )"
+            "version": "[0.9.1, )"
           }
         },
         "imports": [

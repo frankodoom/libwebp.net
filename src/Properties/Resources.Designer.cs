@@ -69,5 +69,15 @@ namespace Libwebp.Net.Properties {
                 return ((byte[])(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] cwebp1 {
+            get {
+                object obj = ResourceManager.GetObject("cwebp1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

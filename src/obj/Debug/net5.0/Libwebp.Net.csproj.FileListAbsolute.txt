@@ -49,6 +49,6 @@ C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Debug\net5.0\Libwebp.Net.cspr
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Debug\net5.0\Libwebp.Net.dll
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Debug\net5.0\ref\Libwebp.Net.dll
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Debug\net5.0\Libwebp.Net.pdb
-C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Debug\net5.0\Libwebp.Net.csproj.AssemblyReference.cache
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Debug\net5.0\Libwebp.Net.Properties.Resources.resources
 C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\obj\Debug\net5.0\Libwebp.Net.csproj.GenerateResource.cache
+C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\bin\Debug\net5.0\codecs\linux\cwebp.sh
