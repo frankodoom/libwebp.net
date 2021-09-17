@@ -25,20 +25,20 @@
   <ItemGroup>
     <None Remove="codecs\linux\cwebp" />
     <None Remove="codecs\linux\cwebp.sh" />
-    <None Remove="codecs\windows\cwebp.exe" />
+    <None Remove="codecs\win\cwebp.exe" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="codecs\linux\cwebp.sh">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="codecs\windows\cwebp.exe">
+    <EmbeddedResource Include="codecs\win\cwebp.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="codecs\windows\freeglut.dll">
+    <None Update="codecs\win\freeglut.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="image.jpg">
