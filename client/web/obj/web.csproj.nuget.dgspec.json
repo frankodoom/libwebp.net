@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\client\\web\\web.csproj": {}
+    "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\client\\web\\web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\client\\web\\web.csproj": {
+    "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\client\\web\\web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\client\\web\\web.csproj",
+        "projectUniqueName": "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\client\\web\\web.csproj",
         "projectName": "web",
-        "projectPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\client\\web\\web.csproj",
+        "projectPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\client\\web\\web.csproj",
         "packagesPath": "C:\\Users\\fodoo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSP\\libwebp.net\\client\\web\\obj\\",
+        "outputPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\client\\web\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
