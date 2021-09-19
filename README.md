@@ -1,5 +1,5 @@
 
-<img src="https://github.com/frankodoom/libwebp.net/blob/main/src/assets/libwebp-logo-2.png"/>
+<img src="https://github.com/frankodoom/libwebp.net/blob/main/assets/libwebp-logo-2.png"/>
 
 An asynchronuous utility for encoding images to Google's [.webp](https://developers.google.com/speed/webp) format. Seemlessly compress images to lossy and lossless formats in your .NET projects to improve network performance and reduce file size on disk. WebP generally has better compression than JPEG, PNG and GIF and is designed to supersede them. You can see the library in action by using the [webclient](http://libwebp.azurewebsites.net/) , your result will be downloaded into your browser.
  
@@ -84,6 +84,10 @@ Below demonstrates how the library is used in Asp.Net Core to convert uploaded i
             return File(fs, "application/octet-stream", oFileName);
         }   
 ```
+
+### [Coming SOON!!!]Asp.Net Core MiddleWare 
+ `Libewebp.Net.Middleware` is a separate package that depends on `Libewebp.Net` and allows you to inject image compression
+ in your Asp.Net pipeline. This middleware will compress your specified image types using lossy and lossless angorithms.
 
 <!-- # Compression
   Below shows the results of a basic compression done with libwebp.net, download the files with the link below and compare the file sizes.
