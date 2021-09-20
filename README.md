@@ -85,7 +85,7 @@ Below demonstrates how the library is used in Asp.Net Core to convert uploaded i
         }   
 ```
 
-### [Coming SOON!!!]Asp.Net Core MiddleWare 
+### [Coming SOON!!!] Asp.Net Core MiddleWare 
  `Libewebp.Net.Middleware` is a separate package that depends on `Libewebp.Net` and allows you to inject image compression
  in your Asp.Net pipeline. This middleware will compress your specified image types using lossy and lossless angorithms.
 
