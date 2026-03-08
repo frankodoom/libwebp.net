@@ -4,12 +4,16 @@
     <id>Libwebp.Net</id>
     <version>1.0.0</version>
     <authors>Libwebp.Net</authors>
-    <description>Package Description</description>
+    <projectUrl>https://github.com/frankodoom/libwebp.net</projectUrl>
+    <description>An asynchronuous utility for encoding images to Google's .webp format. Seemlessly compress images to lossy and lossless formats in your .NET projects to improve network performance and reduce file size on disk. WebP generally has better compression than JPEG, PNG and GIF and is designed to supersede them. You can see the library in action by using the webclient , your result will be downloaded into your browser.</description>
+    <copyright>Copyright 2021</copyright>
+    <tags>google, dotnet, webp, file-format, compress-images, asp-net-core, image-compression, dotnet-standard, encoding-convertors, encoding-library, dotnet-standand</tags>
+    <repository type="Git" url="https://github.com/frankodoom/libwebp.net" commit="efdba9821c746df020ce3a1c8276e1274ed0af76" />
     <dependencies>
-      <group targetFramework="net5.0" />
+      <group targetFramework="net8.0" />
     </dependencies>
   </metadata>
   <files>
-    <file src="C:\Users\fodoo\Desktop\Lab\OSP\libwebp.net\src\bin\Debug\net5.0\Libwebp.Net.dll" target="lib\net5.0\Libwebp.Net.dll" />
+    <file src="C:\Users\FrankOdoom\OneDrive - Accede\Desktop\Projects\Personal\libwebp.net\src\bin\Debug\net8.0\Libwebp.Net.dll" target="lib\net8.0\Libwebp.Net.dll" />
   </files>
 </package>

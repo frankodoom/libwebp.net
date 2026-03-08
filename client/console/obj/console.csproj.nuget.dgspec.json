@@ -1,41 +1,40 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\client\\console\\console.csproj": {}
+    "C:\\Users\\FrankOdoom\\OneDrive - Accede\\Desktop\\Projects\\Personal\\libwebp.net\\client\\console\\console.csproj": {}
   },
   "projects": {
-    "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\client\\console\\console.csproj": {
+    "C:\\Users\\FrankOdoom\\OneDrive - Accede\\Desktop\\Projects\\Personal\\libwebp.net\\client\\console\\console.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\client\\console\\console.csproj",
+        "projectUniqueName": "C:\\Users\\FrankOdoom\\OneDrive - Accede\\Desktop\\Projects\\Personal\\libwebp.net\\client\\console\\console.csproj",
         "projectName": "console",
-        "projectPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\client\\console\\console.csproj",
-        "packagesPath": "C:\\Users\\fodoo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\client\\console\\obj\\",
+        "projectPath": "C:\\Users\\FrankOdoom\\OneDrive - Accede\\Desktop\\Projects\\Personal\\libwebp.net\\client\\console\\console.csproj",
+        "packagesPath": "C:\\Users\\FrankOdoom\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\FrankOdoom\\OneDrive - Accede\\Desktop\\Projects\\Personal\\libwebp.net\\client\\console\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\fodoo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\FrankOdoom\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net5.0"
+          "net8.0"
         ],
         "sources": {
-          "C:\\Users\\fodoo\\Desktop": {}
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\src\\Libwebp.Net.csproj": {
-                "projectPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\src\\Libwebp.Net.csproj"
+              "C:\\Users\\FrankOdoom\\OneDrive - Accede\\Desktop\\Projects\\Personal\\libwebp.net\\src\\Libwebp.Net.csproj": {
+                "projectPath": "C:\\Users\\FrankOdoom\\OneDrive - Accede\\Desktop\\Projects\\Personal\\libwebp.net\\src\\Libwebp.Net.csproj"
               }
             }
           }
@@ -44,18 +43,24 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "imports": [
             "net461",
             "net462",
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -64,39 +69,38 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.418/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\src\\Libwebp.Net.csproj": {
-      "version": "0.9.1",
+    "C:\\Users\\FrankOdoom\\OneDrive - Accede\\Desktop\\Projects\\Personal\\libwebp.net\\src\\Libwebp.Net.csproj": {
+      "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\src\\Libwebp.Net.csproj",
+        "projectUniqueName": "C:\\Users\\FrankOdoom\\OneDrive - Accede\\Desktop\\Projects\\Personal\\libwebp.net\\src\\Libwebp.Net.csproj",
         "projectName": "Libwebp.Net",
-        "projectPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\src\\Libwebp.Net.csproj",
-        "packagesPath": "C:\\Users\\fodoo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\fodoo\\Desktop\\Lab\\OSS\\projects\\libwebp.net\\src\\obj\\",
+        "projectPath": "C:\\Users\\FrankOdoom\\OneDrive - Accede\\Desktop\\Projects\\Personal\\libwebp.net\\src\\Libwebp.Net.csproj",
+        "packagesPath": "C:\\Users\\FrankOdoom\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\FrankOdoom\\OneDrive - Accede\\Desktop\\Projects\\Personal\\libwebp.net\\src\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\fodoo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\FrankOdoom\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net5.0"
+          "net8.0"
         ],
         "sources": {
-          "C:\\Users\\fodoo\\Desktop": {}
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {}
           }
         },
@@ -104,18 +108,24 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "imports": [
             "net461",
             "net462",
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -124,7 +134,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.418/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

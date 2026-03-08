@@ -1,14 +1,11 @@
 ﻿using Libwebp.Net;
 using Libwebp.Net.utility;
-using Libwebp.Standard;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using web.Models;
 
@@ -25,7 +22,7 @@ namespace web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(new ConvertViewModel());
         }
 
         public IActionResult Privacy()
@@ -34,38 +31,120 @@ namespace web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ConvertAsync(IFormFile file)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ConvertAsync(ConvertViewModel model)
         {
+            if (model.File == null || model.File.Length == 0)
+            {
+                ModelState.AddModelError(nameof(model.File), "Please select an image file.");
+                return View("Index", model);
+            }
 
-            if (file == null)
-                throw new FileNotFoundException();
+            var oFileName = $"{Path.GetFileNameWithoutExtension(model.File.FileName)}.webp";
 
-            //Todo can handle file checks ie. extensions size etc..
-
-            var oFileName = $"{Path.GetFileNameWithoutExtension(file.FileName)}.webp";
-
-            //get file as memory stream
+            // Copy upload to memory
             using var ms = new MemoryStream();
-                     file.CopyTo(ms);
-                 
-            // create your webp configuration
-            var config = new WebpConfigurationBuilder()
-               .Preset(Preset.PHOTO)
-               .Output(oFileName)
-               .Build();
+            await model.File.CopyToAsync(ms);
 
-            //create an encoder and pass in your configuration
+            // Build configuration from all form options
+            var builder = new WebpConfigurationBuilder().Output(oFileName);
+
+            // ── Basic ──────────────────────────────────────────────
+            if (!string.IsNullOrEmpty(model.Preset))
+                builder.Preset(model.Preset);
+
+            if (model.QualityFactor.HasValue)
+                builder.QualityFactor(model.QualityFactor.Value);
+
+            if (model.CompressionMethod.HasValue)
+                builder.CompressionMethod(model.CompressionMethod.Value);
+
+            if (model.Lossless)
+                builder.Lossless();
+
+            if (model.LosslessPreset.HasValue)
+                builder.LosslessPreset(model.LosslessPreset.Value);
+
+            if (model.Pass.HasValue)
+                builder.Pass(model.Pass.Value);
+
+            // ── Quality & Size ─────────────────────────────────────
+            if (model.TargetSize.HasValue)
+                builder.TargetSize(model.TargetSize.Value);
+
+            if (model.TargetPSNR.HasValue)
+                builder.TargetPSNR(model.TargetPSNR.Value);
+
+            if (model.NearLossless.HasValue)
+                builder.NearLossless(model.NearLossless.Value);
+
+            if (!string.IsNullOrEmpty(model.Hint))
+                builder.Hint(model.Hint);
+
+            // ── Filter & Sharpness ─────────────────────────────────
+            if (model.Filter.HasValue)
+                builder.Filter(model.Filter.Value);
+
+            if (model.Sharpness.HasValue)
+                builder.Sharpness(model.Sharpness.Value);
+
+            if (model.FilterType == "strong")
+                builder.Strong();
+            else if (model.FilterType == "nostrong")
+                builder.NoStrong();
+
+            if (model.SharpYuv)
+                builder.SharpYuv();
+
+            if (model.SpatialNoiseShaping.HasValue)
+                builder.SpatialNoiseShaping(model.SpatialNoiseShaping.Value);
+
+            // ── Segments & Partitions ──────────────────────────────
+            if (model.NumberOfSegments.HasValue)
+                builder.NumberOfSegments(model.NumberOfSegments.Value);
+
+            if (model.PartitionLimit.HasValue)
+                builder.PartitionLimit(model.PartitionLimit.Value);
+
+            // ── Alpha / Transparency ───────────────────────────────
+            if (model.AlphaQ.HasValue)
+                builder.AlphaQ(model.AlphaQ.Value);
+
+            if (model.AlphaMethod.HasValue)
+                builder.AlphaMethod(model.AlphaMethod.Value);
+
+            if (!string.IsNullOrEmpty(model.AlphaFilter))
+                builder.AlphaFilter(model.AlphaFilter);
+
+            if (model.NoAlpha)
+                builder.NoAlpha();
+
+            if (model.Exact)
+                builder.Exact();
+
+            // ── Image Transform ────────────────────────────────────
+            if (model.CropX.HasValue && model.CropY.HasValue && model.CropW.HasValue && model.CropH.HasValue)
+                builder.Crop(model.CropX.Value, model.CropY.Value, model.CropW.Value, model.CropH.Value);
+
+            if (model.ResizeW.HasValue && model.ResizeH.HasValue)
+                builder.Resize(model.ResizeW.Value, model.ResizeH.Value);
+
+            // ── Performance & Metadata ─────────────────────────────
+            if (model.MultiThreading)
+                builder.MultiThreading();
+
+            if (model.LowMemory)
+                builder.LowMemory();
+
+            if (!string.IsNullOrEmpty(model.Metadata))
+                builder.Metadata(model.Metadata);
+
+            var config = builder.Build();
             var encoder = new WebpEncoder(config);
 
-            //call the encoder and pass in the Memorystream and FileName
-            //the encoder after encoding will return a FileStream output
-            //Optional cast to Stream to return file for download
-            Stream fs = await encoder.EncodeAsync(ms, file.FileName);
+            Stream fs = await encoder.EncodeAsync(ms, model.File.FileName);
 
-            /*Do whatever you want with the file....download, copy to disk or 
-              save to cloud*/
-         
-            return  File(fs, "application/octet-stream", oFileName);
+            return File(fs, "application/octet-stream", oFileName);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

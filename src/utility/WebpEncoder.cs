@@ -1,68 +1,65 @@
-﻿using Libwebp.Net;
+﻿using Libwebp.Net.errors;
 using Libwebp.Net.utility;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Libwebp.Standard
+namespace Libwebp.Net
 {
     /// <summary>
-    /// This class Recieves a FileStream,Encodes to.Webp and 
-    /// returns a FileStream of the results 
-    /// which can be Saved To disk or Downloaded by any .NET
-    /// Client Application
+    /// Receives a MemoryStream, encodes it to .webp format, and
+    /// returns a FileStream of the result which can be saved to disk
+    /// or downloaded by any .NET client application.
     /// </summary>
     public class WebpEncoder
     {
-        private WebPConfiguration _configuration { get; set; }
+        private readonly WebPConfiguration _configuration;
+
         /// <summary>
-        /// public constructor that accepts the configuration
-        /// and uses it through out the encode process
+        /// Creates a new encoder with the specified configuration.
         /// </summary>
-        /// <param name="configuration"></param>
+        /// <param name="configuration">The WebP encoding configuration</param>
         public WebpEncoder(WebPConfiguration configuration)
         {
-            _configuration = configuration;
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
-
+        /// <summary>
+        /// Encodes the input image to WebP format asynchronously.
+        /// </summary>
+        /// <param name="memoryStream">The input image as a MemoryStream</param>
+        /// <param name="fileName">The original input file name</param>
+        /// <returns>A FileStream of the encoded WebP file</returns>
         public async Task<FileStream> EncodeAsync(MemoryStream memoryStream, string fileName)
         {
-
-            //null check
             if (memoryStream == null)
-                throw new FileNotFoundException();
+                throw new ArgumentNullException(nameof(memoryStream));
+            if (string.IsNullOrWhiteSpace(fileName))
+                throw new ArgumentNullException(nameof(fileName));
+            if (string.IsNullOrWhiteSpace(_configuration.OutputFileName))
+                throw new OutputFileNameNotFoundException("Output file name not configured. Call Output() on WebpConfigurationBuilder.");
 
-            if (fileName == null)
-                throw new ArgumentNullException(fileName);
+            // Sanitize file names to prevent command injection
+            var sanitizedInputName = FileHelper.SanitizeFileName(fileName);
+            var sanitizedOutputName = FileHelper.SanitizeFileName(_configuration.OutputFileName);
 
-            // Get user temp directory
-            var path = Path.GetTempPath();
+            var tempPath = Path.GetTempPath();
+            var inputFilePath = Path.Combine(tempPath, sanitizedInputName);
+            var outputFilePath = Path.Combine(tempPath, sanitizedOutputName);
 
-            //write file in memory to temp location on server
-            FileStream fs = new FileStream(path + fileName.Trim(), FileMode.Create, FileAccess.Write, FileShare.None);
-            memoryStream.WriteTo(fs);
-            fs.Close();
+            // Write input stream to temp location
+            using (var fs = new FileStream(inputFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
+            {
+                memoryStream.Position = 0;
+                await memoryStream.CopyToAsync(fs);
+            }
 
-            //pass the filestream to the filehelper for file operations
-            FileHelper.SetInputFileStream(fs);
+            // Build the command from the configuration and file paths
+            var commandBuilder = new CommandBuilder(_configuration, inputFilePath, outputFilePath);
+            string command = commandBuilder.GetCommand();
 
-            //Dispose the FileStream !
-            await fs.DisposeAsync();
-
-            //Construct the command from users configuration
-            CommandBuilder command = new CommandBuilder(_configuration);
-
-            //get the users command to be executed
-            string usercommand = command.GetCommand();
-
-            //Execute the command
-
-            return await CommandExecutor.Execute(usercommand); 
+            // Execute the encoding command and return the output file
+            return await CommandExecutor.Execute(command, outputFilePath);
         }
-
-        
-
     }
 }

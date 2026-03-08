@@ -1,67 +1,80 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection.Emit;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Libwebp.Net.utility
 {
-    /* LibWebP Command Builder
-       © 2021 Frank Arkhurst Odoom
-       This class is responsible for recieving the WebPConfiguration options 
-       from the WebPConfigirationBuilder and dynamically inserts
-       the data as arguements to construct the command
-       needed by the subprocess to execute the encoder cwebp.exe when the
-       Command Executor is called.
-     */
+    /// <summary>
+    /// Constructs the cwebp command-line arguments from the WebP configuration
+    /// and file paths.
+    /// © 2021 Frank Arkhurst Odoom
+    /// </summary>
     public class CommandBuilder
     {
-        private StringBuilder Command;
-        public CommandBuilder(WebPConfiguration configuration)
+        private readonly string _arguments;
+
+        public CommandBuilder(WebPConfiguration configuration, string inputFilePath, string outputFilePath)
         {
-            //initialize and construct  arguments in order of execution
-            string[] args = new string[20];
-            args[0] = string.Format("\"{0}\"", FileHelper.GetInputFileStream().Name);
-            args[1] = configuration.Preset;
-            args[2] = configuration.Lossless;
-            args[3] = configuration.Output;
+            if (configuration == null)
+                throw new ArgumentNullException(nameof(configuration));
+            if (string.IsNullOrWhiteSpace(inputFilePath))
+                throw new ArgumentNullException(nameof(inputFilePath));
+            if (string.IsNullOrWhiteSpace(outputFilePath))
+                throw new ArgumentNullException(nameof(outputFilePath));
 
-            /*Add other command arguements in order of execution*/
+            string[] args = new string[]
+            {
+                $"\"{inputFilePath}\"",
+                configuration.Preset,
+                configuration.Lossless,
+                configuration.LosslessPreset,
+                configuration.QualityFactor,
+                configuration.AlphaQ,
+                configuration.CompressionMethod,
+                configuration.NumberOfSegments,
+                configuration.TargetSize,
+                configuration.TargetPSNR,
+                configuration.InputSize,
+                configuration.SpatialNoiseShaping,
+                configuration.Filter,
+                configuration.Sharpness,
+                configuration.Strong,
+                configuration.SharpYuv,
+                configuration.PartitionLimit,
+                configuration.Pass,
+                configuration.Crop,
+                configuration.Resize,
+                configuration.MultiThreading,
+                configuration.LowMemory,
+                configuration.AlphaMethod,
+                configuration.AlphaFilter,
+                configuration.Exact,
+                configuration.NoAlpha,
+                configuration.NearLossless,
+                configuration.Hint,
+                configuration.Metadata,
+                $"{CommandPrefix.Output}\"{outputFilePath}\""
+            };
 
-            Build(args);
+            _arguments = BuildArguments(args);
         }
 
-        private void Build(string[] args)
+        private static string BuildArguments(string[] args)
         {
-            //initialize the base command
-            if(OperatingSystem.IsWindows())
-              Command = new StringBuilder($"cwebp ");
-            if(OperatingSystem.IsLinux())
-                Command = new StringBuilder($"./cwebp.sh cwebp ");
-
-            List<string> userargs = new List<string>();
-
+            var userArgs = new List<string>();
             foreach (var param in args)
             {
-                if (param == null)
-                {
-                    continue;
-                }
-                userargs.Add(param);
+                if (!string.IsNullOrWhiteSpace(param))
+                    userArgs.Add(param);
             }
-            Command.AppendJoin(" ", userargs);
+            return string.Join(" ", userArgs);
         }
 
         /// <summary>
-        /// Ger the comand built by the Builder
+        /// Get the command arguments built by the Builder.
+        /// These are passed as Arguments to ProcessStartInfo (FileName is the codec binary).
         /// </summary>
-        /// <returns>string user command to be executed</returns>
-        public string GetCommand()
-        {
-            return Command.ToString();
-        }
-
+        /// <returns>The argument string for cwebp</returns>
+        public string GetCommand() => _arguments;
     }
 }

@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Libwebp.Net.errors
 {
-    public class CommandBuilderException
+    public class CommandBuilderException : Exception
     {
+        public CommandBuilderException() { }
+
+        public CommandBuilderException(string message)
+            : base(message) { }
+
+        public CommandBuilderException(string message, Exception inner)
+            : base(message, inner) { }
     }
 }

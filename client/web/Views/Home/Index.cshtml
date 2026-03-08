@@ -1,149 +1,276 @@
-﻿@{
-    ViewData["Title"] = "LibWebp.Net - An image conversion tool for .net";
+﻿@model web.Models.ConvertViewModel
+@{
+    ViewData["Title"] = "LibWebp.Net — WebP Encoder (cwebp 1.5.0)";
 }
 
 <div class="text-center">
-    <img src="~/images/webplogo.png"  style="margin-top:50px"/>
-@*    <h1 class="display-4">Libwebp.NET</h1>*@
-    <p>Upload your image and convert to Google's WebP Format</p>
-    <br />
-    <style>
-        .form-control-borderless {
-            border: none;
-        }
+    <img src="~/images/webplogo.png" style="margin-top:30px" alt="LibWebp.Net logo" />
+    <p class="mt-2">Upload an image and convert it to Google's WebP format with full control over every option.</p>
+</div>
 
-            .form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
-                border: none;
-                outline: none;
-                box-shadow: none;
-            }
-    </style>
-    <div class="container">
-        <br />
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-10 col-lg-8">
-                <form class="card card-sm" action="Home/Convert" method="post" enctype="multipart/form-data">
-                    <div class="card-body row no-gutters align-items-center">
-                        @*<div class="col-auto">
-                    <i class="fas fa-file h4 text-body"></i>
-                </div>*@
-                        <!--end of col-->
-                        <div class="col">
-                            <input id="file" onchange="checkfile()" required class="form-control form-control-file form-control-lg form-control-borderless" type="file" name="file" value="file">
-                        </div>
-                        <!--end of col-->
-                        <div class="col-auto">
-                            <button class="btn btn-lg btn-info" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" hidden="hidden" id="configure" type="button"><i class="fas fa-wrench"></i></button>
-                            <button class="btn btn-lg btn-success" id="convert" type="submit"><i id="cog" class="fas fa-cog"></i></button>
-                        </div>
-                        <!--end of col-->
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+
+            <form asp-controller="Home" asp-action="Convert" method="post" enctype="multipart/form-data">
+                @Html.AntiForgeryToken()
+
+                @* ── File picker + Convert button ─────────────────── *@
+                <div class="card mb-3">
+                    <div class="card-body d-flex align-items-center gap-2">
+                        <input asp-for="File" class="form-control form-control-lg" id="fileInput" />
+                        <button type="button" class="btn btn-lg btn-info" data-bs-toggle="collapse"
+                                data-bs-target="#advancedOptions" id="configureBtn" style="display:none">
+                            <i class="fas fa-wrench"></i>
+                        </button>
+                        <button type="submit" class="btn btn-lg btn-success" id="convertBtn">
+                            <i id="cog" class="fas fa-cog"></i> Convert
+                        </button>
                     </div>
-                </form>
-
-                <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-                         <p class="text-center">Advanced configuration coming soon!</p>
-                      @*  <form class="row g-3">
-                            <div class="form-group row col-12">
-                                <div class="col-md-3">
-                                    <label for="inputPassword4" class="form-label text-sm-center">Quality</label>
-                                    <input type="text" placeholder="(0:small..100:big)" class="form-control" id="inputPassword4">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="inputEmail4" class="form-label text-sm-center">Alpha Q</label>
-                                    <input type="email" class="form-control" placeholder="(0..100)" id="inputEmail4">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="inputPassword4" class="form-label text-sm-center">Compression </label>
-                                    <input type="password" class="form-control" id="inputPassword4" placeholder="(0=fast, 6=slowest)">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="inputState" class="form-label text-sm-center">Preset</label>
-                                    <select id="inputState" class="form-select form-control">
-                                        <option selected>Choose...</option>
-                                        <option>Default</option>
-                                        <option>Photo</option>
-                                        <option>Picture</option>
-                                        <option>Icon</option>
-                                        <option>Text</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row col-12">
-                                <div class="col-md-3">
-                                    <label for="inputEmail4" class="form-label text-sm-center">Segment</label>
-                                    <input type="text" class="form-control" placeholder="use (1..4)" id="inputEmail4">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="inputPassword4" class="form-label text-sm-center">Spatial Noice</label>
-                                    <input type="text" class="form-control" placeholder="(0:off, 100:max)" id="inputPassword4">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="inputPassword4" class="form-label text-sm-center">Size</label>
-                                    <input type="text" class="form-control" id="inputPassword4" placeholder="(width x height)">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="inputPassword4" class="form-label text-sm-center">Lossless</label>
-                                    <input type="checkbox" class="form-control" id="inputPassword4">
-                                </div>
-                            </div>
-                            <div class="form-group row col-12">
-                                <div class="col-md-3">
-                                    <label for="inputEmail4" class="form-label text-sm-center">Sharpness</label>
-                                    <input type="text" class="form-control" placeholder="use (1..4)" id="inputEmail4">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="inputPassword4" class="form-label text-sm-center">Psnr</label>
-                                    <input type="text" class="form-control" placeholder="(0:off, 100:max)" id="inputPassword4">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="inputPassword4" class="form-label text-sm-center">Filter</label>
-                                    <input type="text" class="form-control" id="inputPassword4" placeholder="(0=off..100)">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="inputPassword4" class="form-label text-sm-center">Pass Number</label>
-                                    <input type="text" class="form-control" id="inputPassword4" placeholder="(1..10)">
-                                </div>
-
-                            </div>
-                        </form>*@
-                    </div>
+                    <span asp-validation-for="File" class="text-danger px-3 pb-2"></span>
                 </div>
-            </div>
-            <!--end of col-->
+
+                @* ── Advanced Options (collapsed) ─────────────────── *@
+                <div class="collapse" id="advancedOptions">
+
+                    @* ── Basic ────────────────────────────────────── *@
+                    <div class="card mb-3">
+                        <div class="card-header fw-bold"><i class="fas fa-sliders-h me-1"></i> Basic</div>
+                        <div class="card-body row g-3">
+                            <div class="col-md-3">
+                                <label asp-for="Preset" class="form-label">Preset</label>
+                                <select asp-for="Preset" class="form-select">
+                                    <option value="">— none —</option>
+                                    <option value="default">Default</option>
+                                    <option value="photo">Photo</option>
+                                    <option value="picture">Picture</option>
+                                    <option value="drawing">Drawing</option>
+                                    <option value="icon">Icon</option>
+                                    <option value="text">Text</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="QualityFactor" class="form-label">Quality (0–100)</label>
+                                <input asp-for="QualityFactor" class="form-control" type="number" min="0" max="100" step="0.1" placeholder="75" />
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="CompressionMethod" class="form-label">Method (0–6)</label>
+                                <input asp-for="CompressionMethod" class="form-control" type="number" min="0" max="6" placeholder="4" />
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="Pass" class="form-label">Pass (1–10)</label>
+                                <input asp-for="Pass" class="form-control" type="number" min="1" max="10" placeholder="1" />
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-check mt-4">
+                                    <input asp-for="Lossless" class="form-check-input" type="checkbox" />
+                                    <label asp-for="Lossless" class="form-check-label">Lossless</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="LosslessPreset" class="form-label">Lossless Preset (0–9)</label>
+                                <input asp-for="LosslessPreset" class="form-control" type="number" min="0" max="9" placeholder="" />
+                            </div>
+                        </div>
+                    </div>
+
+                    @* ── Quality & Size Control ───────────────────── *@
+                    <div class="card mb-3">
+                        <div class="card-header fw-bold"><i class="fas fa-compress-arrows-alt me-1"></i> Quality &amp; Size Control</div>
+                        <div class="card-body row g-3">
+                            <div class="col-md-3">
+                                <label asp-for="TargetSize" class="form-label">Target Size (bytes)</label>
+                                <input asp-for="TargetSize" class="form-control" type="number" min="0" placeholder="" />
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="TargetPSNR" class="form-label">Target PSNR (dB)</label>
+                                <input asp-for="TargetPSNR" class="form-control" type="number" step="0.1" min="0" placeholder="" />
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="NearLossless" class="form-label">Near-Lossless (0–100)</label>
+                                <input asp-for="NearLossless" class="form-control" type="number" min="0" max="100" placeholder="100 = off" />
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="Hint" class="form-label">Hint</label>
+                                <select asp-for="Hint" class="form-select">
+                                    <option value="">— none —</option>
+                                    <option value="photo">Photo</option>
+                                    <option value="picture">Picture</option>
+                                    <option value="graph">Graph</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* ── Filter & Sharpness ───────────────────────── *@
+                    <div class="card mb-3">
+                        <div class="card-header fw-bold"><i class="fas fa-adjust me-1"></i> Filter &amp; Sharpness</div>
+                        <div class="card-body row g-3">
+                            <div class="col-md-3">
+                                <label asp-for="Filter" class="form-label">Filter (0–100)</label>
+                                <input asp-for="Filter" class="form-control" type="number" min="0" max="100" placeholder="" />
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="Sharpness" class="form-label">Sharpness (0–7)</label>
+                                <input asp-for="Sharpness" class="form-control" type="number" min="0" max="7" placeholder="0" />
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="FilterType" class="form-label">Filter Type</label>
+                                <select asp-for="FilterType" class="form-select">
+                                    <option value="">— default —</option>
+                                    <option value="strong">Strong</option>
+                                    <option value="nostrong">Simple (no strong)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="SpatialNoiseShaping" class="form-label">SNS (0–100)</label>
+                                <input asp-for="SpatialNoiseShaping" class="form-control" type="number" min="0" max="100" placeholder="50" />
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-check mt-4">
+                                    <input asp-for="SharpYuv" class="form-check-input" type="checkbox" />
+                                    <label asp-for="SharpYuv" class="form-check-label">Sharp YUV</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* ── Segments & Partitions ────────────────────── *@
+                    <div class="card mb-3">
+                        <div class="card-header fw-bold"><i class="fas fa-th me-1"></i> Segments &amp; Partitions</div>
+                        <div class="card-body row g-3">
+                            <div class="col-md-4">
+                                <label asp-for="NumberOfSegments" class="form-label">Segments (1–4)</label>
+                                <input asp-for="NumberOfSegments" class="form-control" type="number" min="1" max="4" placeholder="4" />
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="PartitionLimit" class="form-label">Partition Limit (0–100)</label>
+                                <input asp-for="PartitionLimit" class="form-control" type="number" min="0" max="100" placeholder="" />
+                            </div>
+                        </div>
+                    </div>
+
+                    @* ── Alpha / Transparency ─────────────────────── *@
+                    <div class="card mb-3">
+                        <div class="card-header fw-bold"><i class="fas fa-eye me-1"></i> Alpha / Transparency</div>
+                        <div class="card-body row g-3">
+                            <div class="col-md-3">
+                                <label asp-for="AlphaQ" class="form-label">Alpha Quality (0–100)</label>
+                                <input asp-for="AlphaQ" class="form-control" type="number" min="0" max="100" placeholder="" />
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="AlphaMethod" class="form-label">Alpha Method (0–1)</label>
+                                <input asp-for="AlphaMethod" class="form-control" type="number" min="0" max="1" placeholder="1" />
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="AlphaFilter" class="form-label">Alpha Filter</label>
+                                <select asp-for="AlphaFilter" class="form-select">
+                                    <option value="">— default —</option>
+                                    <option value="none">None</option>
+                                    <option value="fast">Fast</option>
+                                    <option value="best">Best</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 d-flex gap-3 align-items-end">
+                                <div class="form-check">
+                                    <input asp-for="NoAlpha" class="form-check-input" type="checkbox" />
+                                    <label asp-for="NoAlpha" class="form-check-label">No Alpha</label>
+                                </div>
+                                <div class="form-check">
+                                    <input asp-for="Exact" class="form-check-input" type="checkbox" />
+                                    <label asp-for="Exact" class="form-check-label">Exact</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* ── Image Transform ──────────────────────────── *@
+                    <div class="card mb-3">
+                        <div class="card-header fw-bold"><i class="fas fa-crop-alt me-1"></i> Image Transform</div>
+                        <div class="card-body row g-3">
+                            <div class="col-12"><strong>Crop</strong> <small class="text-muted">(leave empty to skip)</small></div>
+                            <div class="col-md-3">
+                                <label asp-for="CropX" class="form-label">X</label>
+                                <input asp-for="CropX" class="form-control" type="number" min="0" />
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="CropY" class="form-label">Y</label>
+                                <input asp-for="CropY" class="form-control" type="number" min="0" />
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="CropW" class="form-label">Width</label>
+                                <input asp-for="CropW" class="form-control" type="number" min="1" />
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="CropH" class="form-label">Height</label>
+                                <input asp-for="CropH" class="form-control" type="number" min="1" />
+                            </div>
+
+                            <div class="col-12 mt-3"><strong>Resize</strong> <small class="text-muted">(0 for either dimension to keep aspect ratio)</small></div>
+                            <div class="col-md-3">
+                                <label asp-for="ResizeW" class="form-label">Width</label>
+                                <input asp-for="ResizeW" class="form-control" type="number" min="0" />
+                            </div>
+                            <div class="col-md-3">
+                                <label asp-for="ResizeH" class="form-label">Height</label>
+                                <input asp-for="ResizeH" class="form-control" type="number" min="0" />
+                            </div>
+                        </div>
+                    </div>
+
+                    @* ── Performance & Metadata ───────────────────── *@
+                    <div class="card mb-3">
+                        <div class="card-header fw-bold"><i class="fas fa-tachometer-alt me-1"></i> Performance &amp; Metadata</div>
+                        <div class="card-body row g-3">
+                            <div class="col-md-3">
+                                <div class="form-check mt-2">
+                                    <input asp-for="MultiThreading" class="form-check-input" type="checkbox" />
+                                    <label asp-for="MultiThreading" class="form-check-label">Multi-Threading</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-check mt-2">
+                                    <input asp-for="LowMemory" class="form-check-input" type="checkbox" />
+                                    <label asp-for="LowMemory" class="form-check-label">Low Memory</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Metadata" class="form-label">Metadata</label>
+                                <select asp-for="Metadata" class="form-select">
+                                    <option value="">none (default)</option>
+                                    <option value="all">All</option>
+                                    <option value="exif">EXIF</option>
+                                    <option value="icc">ICC</option>
+                                    <option value="xmp">XMP</option>
+                                    <option value="exif,icc">EXIF + ICC</option>
+                                    <option value="exif,icc,xmp">EXIF + ICC + XMP</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- /advancedOptions -->
+            </form>
+
         </div>
     </div>
 </div>
 
-@section Scripts{ 
-
+@section Scripts {
 <script>
-    var file = $("#file");
-    var convert = $("#convert");
-   function checkfile(){
-        if (file.length>0)
-            $("#configure").removeAttr("hidden");
-    }
+    var fileInput = document.getElementById("fileInput");
+    var configureBtn = document.getElementById("configureBtn");
+    var convertBtn = document.getElementById("convertBtn");
+    var cog = document.getElementById("cog");
 
-    convert.on("click", function () {
-        $("#cog").addClass("fa-spin");
-        $("form").submit(function () {
-            $("#cog").removeClass("fa-spin");
-        });
-    })
-
-    function checkCookie() {
-        var cookieVal = $.cookie($("input[name='windowid']").val());
-        if (cookieVal == null || cookieVal === 'undefined') {
-            setTimeout("checkCookie();", 1000);
+    fileInput.addEventListener("change", function () {
+        if (fileInput.files.length > 0) {
+            configureBtn.style.display = "";
         }
-        else {
-            $(".working").hide();
-            $(".input-form").show();
-            $("form")[0].reset();
-        }
-    }
+    });
 
+    convertBtn.addEventListener("click", function () {
+        cog.classList.add("fa-spin");
+    });
 </script>
-
 }
