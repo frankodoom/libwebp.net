@@ -29,7 +29,7 @@ namespace console
             }
 
             Console.WriteLine("═══════════════════════════════════════════════");
-            Console.WriteLine("       Libwebp.Net — Console Demo (cwebp 1.5.0)");
+            Console.WriteLine("       Libwebp.Net — Console Demo (libwebp 1.5.0)");
             Console.WriteLine("═══════════════════════════════════════════════");
             Console.WriteLine();
 
@@ -43,13 +43,13 @@ namespace console
 
             // ── 1. Basic encode (default quality) ──────────────────────
             Console.WriteLine("1) Basic encode (default quality 75) ...");
-            await EncodeAndReport(ms, file.Name, new WebpConfigurationBuilder()
+            await EncodeAndReport(ms, file.Name, "basic.webp", new WebpConfigurationBuilder()
                 .Output("basic.webp")
                 .Build(), file.Length);
 
             // ── 2. High quality lossy ──────────────────────────────────
             Console.WriteLine("2) High quality lossy (q=95, preset photo, sharp_yuv) ...");
-            await EncodeAndReport(ms, file.Name, new WebpConfigurationBuilder()
+            await EncodeAndReport(ms, file.Name, "hq_lossy.webp", new WebpConfigurationBuilder()
                 .Output("hq_lossy.webp")
                 .Preset(Preset.PHOTO)
                 .QualityFactor(95)
@@ -59,7 +59,7 @@ namespace console
 
             // ── 3. Lossless encode ─────────────────────────────────────
             Console.WriteLine("3) Lossless encode (lossless preset 6, method 6) ...");
-            await EncodeAndReport(ms, file.Name, new WebpConfigurationBuilder()
+            await EncodeAndReport(ms, file.Name, "lossless.webp", new WebpConfigurationBuilder()
                 .Output("lossless.webp")
                 .Lossless()
                 .LosslessPreset(6)
@@ -69,14 +69,14 @@ namespace console
 
             // ── 4. Near-lossless ───────────────────────────────────────
             Console.WriteLine("4) Near-lossless (level 60) ...");
-            await EncodeAndReport(ms, file.Name, new WebpConfigurationBuilder()
+            await EncodeAndReport(ms, file.Name, "near_lossless.webp", new WebpConfigurationBuilder()
                 .Output("near_lossless.webp")
                 .NearLossless(60)
                 .Build(), file.Length);
 
             // ── 5. Small file target ───────────────────────────────────
             Console.WriteLine("5) Target file size 20 KB (pass 10) ...");
-            await EncodeAndReport(ms, file.Name, new WebpConfigurationBuilder()
+            await EncodeAndReport(ms, file.Name, "target_size.webp", new WebpConfigurationBuilder()
                 .Output("target_size.webp")
                 .TargetSize(20_000)
                 .Pass(10)
@@ -84,7 +84,7 @@ namespace console
 
             // ── 6. Resize + Crop ───────────────────────────────────────
             Console.WriteLine("6) Resize to 320x0 (keep aspect ratio) ...");
-            await EncodeAndReport(ms, file.Name, new WebpConfigurationBuilder()
+            await EncodeAndReport(ms, file.Name, "resized.webp", new WebpConfigurationBuilder()
                 .Output("resized.webp")
                 .Resize(320, 0)
                 .QualityFactor(80)
@@ -92,7 +92,7 @@ namespace console
 
             // ── 7. Alpha / transparency options ────────────────────────
             Console.WriteLine("7) Alpha options (alpha_q=50, alpha_filter=best, exact) ...");
-            await EncodeAndReport(ms, file.Name, new WebpConfigurationBuilder()
+            await EncodeAndReport(ms, file.Name, "alpha.webp", new WebpConfigurationBuilder()
                 .Output("alpha.webp")
                 .AlphaQ(50)
                 .AlphaMethod(1)
@@ -102,7 +102,7 @@ namespace console
 
             // ── 8. Advanced filter + sharpness ─────────────────────────
             Console.WriteLine("8) Filter 80, sharpness 3, strong, SNS 90 ...");
-            await EncodeAndReport(ms, file.Name, new WebpConfigurationBuilder()
+            await EncodeAndReport(ms, file.Name, "filtered.webp", new WebpConfigurationBuilder()
                 .Output("filtered.webp")
                 .Filter(80)
                 .Sharpness(3)
@@ -112,7 +112,7 @@ namespace console
 
             // ── 9. Low memory + metadata preservation ──────────────────
             Console.WriteLine("9) Low memory mode, preserve all metadata ...");
-            await EncodeAndReport(ms, file.Name, new WebpConfigurationBuilder()
+            await EncodeAndReport(ms, file.Name, "metadata.webp", new WebpConfigurationBuilder()
                 .Output("metadata.webp")
                 .QualityFactor(80)
                 .LowMemory()
@@ -122,7 +122,7 @@ namespace console
 
             // ── 10. Kitchen-sink: everything together ──────────────────
             Console.WriteLine("10) Kitchen-sink (all options combined) ...");
-            await EncodeAndReport(ms, file.Name, new WebpConfigurationBuilder()
+            await EncodeAndReport(ms, file.Name, "kitchen_sink.webp", new WebpConfigurationBuilder()
                 .Output("kitchen_sink.webp")
                 .Preset(Preset.PHOTO)
                 .QualityFactor(85)
@@ -148,13 +148,13 @@ namespace console
             Console.WriteLine("═══════════════════════════════════════════════");
         }
 
-        private static async Task EncodeAndReport(MemoryStream ms, string fileName, WebPConfiguration config, long originalSize)
+        private static async Task EncodeAndReport(MemoryStream ms, string fileName, string outputName, WebPConfiguration config, long originalSize)
         {
             var encoder = new WebpEncoder(config);
             using var output = await encoder.EncodeAsync(ms, Path.GetFileName(fileName));
 
             var ratio = (1.0 - (double)output.Length / originalSize) * 100;
-            Console.WriteLine($"    -> {Path.GetFileName(output.Name)}  " +
+            Console.WriteLine($"    -> {outputName}  " +
                               $"{output.Length:N0} bytes  " +
                               $"(saved {ratio:F1}%)");
             Console.WriteLine();

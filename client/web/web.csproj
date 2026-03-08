@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Libwebp.Net.csproj" />
+    <ProjectReference Include="..\..\src\Libwebp.Net.Middleware\Libwebp.Net.Middleware.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace web.Models
 {
     /// <summary>
-    /// View model that carries all cwebp encoding options from the UI form
+    /// View model that carries all WebP encoding options from the UI form
     /// to the controller.
     /// </summary>
     public class ConvertViewModel

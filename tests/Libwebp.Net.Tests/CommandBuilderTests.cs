@@ -1,265 +1,149 @@
 using Libwebp.Net;
+using Libwebp.Net.Interop;
 using Libwebp.Net.utility;
 using System;
 using Xunit;
 
 namespace Libwebp.Net.Tests
 {
-    public class CommandBuilderTests
+    /// <summary>
+    /// Tests for the configuration-to-native-struct conversion and
+    /// NativeEncoder argument validation. These tests do NOT require
+    /// the native libwebp shared library to be present — they verify
+    /// the managed wrapper logic only.
+    /// </summary>
+    public class NativeEncoderTests
     {
+        // ── NativeEncoder.EncodeSimple argument validation ──
+
         [Fact]
-        public void Constructor_NullConfiguration_ThrowsArgumentNullException()
+        public void EncodeSimple_NullRgba_ThrowsArgumentNullException()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                new CommandBuilder(null, "input.png", "output.webp"));
+                NativeEncoder.EncodeSimple(null!, 1, 1, 75f, false));
         }
 
         [Fact]
-        public void Constructor_NullInputPath_ThrowsArgumentNullException()
+        public void EncodeSimple_ZeroWidth_ThrowsArgumentException()
         {
-            var config = new WebpConfigurationBuilder()
-                .Output("output.webp")
-                .Build();
+            Assert.Throws<ArgumentException>(() =>
+                NativeEncoder.EncodeSimple(new byte[4], 0, 1, 75f, false));
+        }
 
+        [Fact]
+        public void EncodeSimple_ZeroHeight_ThrowsArgumentException()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                NativeEncoder.EncodeSimple(new byte[4], 1, 0, 75f, false));
+        }
+
+        [Fact]
+        public void EncodeSimple_NegativeWidth_ThrowsArgumentException()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                NativeEncoder.EncodeSimple(new byte[4], -1, 1, 75f, false));
+        }
+
+        // ── NativeEncoder.EncodeAdvanced argument validation ──
+
+        [Fact]
+        public void EncodeAdvanced_NullRgba_ThrowsArgumentNullException()
+        {
+            var config = new WebPConfig();
             Assert.Throws<ArgumentNullException>(() =>
-                new CommandBuilder(config, null, "output.webp"));
+                NativeEncoder.EncodeAdvanced(null!, 1, 1, config));
         }
 
         [Fact]
-        public void Constructor_NullOutputPath_ThrowsArgumentNullException()
+        public void EncodeAdvanced_ZeroWidth_ThrowsArgumentException()
         {
-            var config = new WebpConfigurationBuilder()
-                .Output("output.webp")
-                .Build();
-
-            Assert.Throws<ArgumentNullException>(() =>
-                new CommandBuilder(config, "input.png", null));
+            var config = new WebPConfig();
+            Assert.Throws<ArgumentException>(() =>
+                NativeEncoder.EncodeAdvanced(new byte[4], 0, 1, config));
         }
 
         [Fact]
-        public void GetCommand_BasicConfig_ContainsInputAndOutput()
+        public void EncodeAdvanced_NegativeHeight_ThrowsArgumentException()
         {
-            var config = new WebpConfigurationBuilder()
-                .Output("output.webp")
-                .Build();
+            var config = new WebPConfig();
+            Assert.Throws<ArgumentException>(() =>
+                NativeEncoder.EncodeAdvanced(new byte[4], 1, -1, config));
+        }
 
-            var builder = new CommandBuilder(config, @"C:\temp\input.png", @"C:\temp\output.webp");
-            var command = builder.GetCommand();
+        // ── NativeEncoder.GetErrorMessage ──
 
-            // Arguments should not contain a "cwebp" prefix — the binary path is set
-            // in ProcessStartInfo.FileName, so Arguments are just the cwebp flags.
-            Assert.DoesNotContain("cwebp ", command);
-            Assert.Contains(@"C:\temp\input.png", command);
-            Assert.Contains("-o ", command);
+        [Fact]
+        public void GetErrorMessage_Ok_ReturnsNoError()
+        {
+            var msg = NativeEncoder.GetErrorMessage(WebPEncodingError.Ok);
+            Assert.Contains("No error", msg);
         }
 
         [Fact]
-        public void GetCommand_BasicConfig_ContainsInputAndOutputPaths()
+        public void GetErrorMessage_OutOfMemory_ReturnsMemoryMessage()
         {
-            var config = new WebpConfigurationBuilder()
-                .Output("output.webp")
-                .Build();
-
-            var inputPath = @"C:\temp\input.png";
-            var outputPath = @"C:\temp\output.webp";
-
-            var builder = new CommandBuilder(config, inputPath, outputPath);
-            var command = builder.GetCommand();
-
-            Assert.Contains(inputPath, command);
-            Assert.Contains(outputPath, command);
-            Assert.Contains("-o ", command);
+            var msg = NativeEncoder.GetErrorMessage(WebPEncodingError.OutOfMemory);
+            Assert.Contains("Memory", msg, StringComparison.OrdinalIgnoreCase);
         }
 
         [Fact]
-        public void GetCommand_WithPreset_ContainsPresetArg()
+        public void GetErrorMessage_BadDimension_ReturnsDimensionMessage()
         {
-            var config = new WebpConfigurationBuilder()
-                .Output("output.webp")
-                .Preset(Preset.PHOTO)
-                .Build();
-
-            var builder = new CommandBuilder(config, @"C:\temp\input.png", @"C:\temp\output.webp");
-            var command = builder.GetCommand();
-
-            Assert.Contains("-preset photo", command);
+            var msg = NativeEncoder.GetErrorMessage(WebPEncodingError.BadDimension);
+            Assert.Contains("width/height", msg, StringComparison.OrdinalIgnoreCase);
         }
 
         [Fact]
-        public void GetCommand_WithLossless_ContainsLosslessArg()
+        public void GetErrorMessage_InvalidConfiguration_ReturnsConfigMessage()
         {
-            var config = new WebpConfigurationBuilder()
-                .Output("output.webp")
-                .Lossless()
-                .Build();
-
-            var builder = new CommandBuilder(config, @"C:\temp\input.png", @"C:\temp\output.webp");
-            var command = builder.GetCommand();
-
-            Assert.Contains("-lossless", command);
+            var msg = NativeEncoder.GetErrorMessage(WebPEncodingError.InvalidConfiguration);
+            Assert.Contains("invalid", msg, StringComparison.OrdinalIgnoreCase);
         }
 
         [Fact]
-        public void GetCommand_WithQualityFactor_ContainsQualityArg()
+        public void GetErrorMessage_FileTooBig_ReturnsSizeMessage()
         {
-            var config = new WebpConfigurationBuilder()
-                .Output("output.webp")
-                .QualityFactor(85)
-                .Build();
-
-            var builder = new CommandBuilder(config, @"C:\temp\input.png", @"C:\temp\output.webp");
-            var command = builder.GetCommand();
-
-            Assert.Contains("-q 85", command);
+            var msg = NativeEncoder.GetErrorMessage(WebPEncodingError.FileTooBig);
+            Assert.Contains("too big", msg, StringComparison.OrdinalIgnoreCase);
         }
 
         [Fact]
-        public void GetCommand_WithAllOptions_ContainsAllArgs()
+        public void GetErrorMessage_UnknownValue_ReturnsUnknown()
         {
-            var config = new WebpConfigurationBuilder()
-                .Output("output.webp")
-                .Preset(Preset.PHOTO)
-                .Lossless()
-                .QualityFactor(90)
-                .AlphaQ(100)
-                .CompressionMethod(6)
-                .NumberOfSegments(4)
-                .TargetSize(50000)
-                .SpatialNoiseShaping(80)
-                .Filter(60)
-                .Build();
-
-            var builder = new CommandBuilder(config, @"C:\temp\input.png", @"C:\temp\output.webp");
-            var command = builder.GetCommand();
-
-            Assert.Contains("-preset photo", command);
-            Assert.Contains("-lossless", command);
-            Assert.Contains("-q 90", command);
-            Assert.Contains("-alpha_q 100", command);
-            Assert.Contains("-m 6", command);
-            Assert.Contains("-segments 4", command);
-            Assert.Contains("-size 50000", command);
-            Assert.Contains("-sns 80", command);
-            Assert.Contains("-f 60", command);
-            Assert.Contains("-o ", command);
+            var msg = NativeEncoder.GetErrorMessage((WebPEncodingError)999);
+            Assert.Contains("Unknown", msg, StringComparison.OrdinalIgnoreCase);
         }
 
+        // ── WebPConfig struct default values ──
+
         [Fact]
-        public void GetCommand_WithSharpness_ContainsSharpnessArg()
+        public void WebPConfig_DefaultStruct_HasZeroValues()
         {
-            var config = new WebpConfigurationBuilder()
-                .Output("output.webp")
-                .Sharpness(5)
-                .Build();
-
-            var builder = new CommandBuilder(config, @"C:\temp\input.png", @"C:\temp\output.webp");
-            var command = builder.GetCommand();
-
-            Assert.Contains("-sharpness 5", command);
+            var config = new WebPConfig();
+            Assert.Equal(0f, config.quality);
+            Assert.Equal(0, config.method);
+            Assert.Equal(0, config.lossless);
         }
 
+        // ── WebPPicture struct layout ──
+
         [Fact]
-        public void GetCommand_WithMultiThreading_ContainsMtArg()
+        public void WebPPicture_DefaultStruct_HasZeroDimensions()
         {
-            var config = new WebpConfigurationBuilder()
-                .Output("output.webp")
-                .MultiThreading()
-                .Build();
-
-            var builder = new CommandBuilder(config, @"C:\temp\input.png", @"C:\temp\output.webp");
-            var command = builder.GetCommand();
-
-            Assert.Contains("-mt", command);
+            var picture = new WebPPicture();
+            Assert.Equal(0, picture.width);
+            Assert.Equal(0, picture.height);
+            Assert.Equal(0, picture.use_argb);
         }
 
-        [Fact]
-        public void GetCommand_WithCrop_ContainsCropArg()
-        {
-            var config = new WebpConfigurationBuilder()
-                .Output("output.webp")
-                .Crop(10, 20, 300, 400)
-                .Build();
-
-            var builder = new CommandBuilder(config, @"C:\temp\input.png", @"C:\temp\output.webp");
-            var command = builder.GetCommand();
-
-            Assert.Contains("-crop 10 20 300 400", command);
-        }
+        // ── WebPMemoryWriter struct layout ──
 
         [Fact]
-        public void GetCommand_WithResize_ContainsResizeArg()
+        public void WebPMemoryWriter_DefaultStruct_IsEmpty()
         {
-            var config = new WebpConfigurationBuilder()
-                .Output("output.webp")
-                .Resize(800, 600)
-                .Build();
-
-            var builder = new CommandBuilder(config, @"C:\temp\input.png", @"C:\temp\output.webp");
-            var command = builder.GetCommand();
-
-            Assert.Contains("-resize 800 600", command);
-        }
-
-        [Fact]
-        public void GetCommand_WithNearLossless_ContainsNearLosslessArg()
-        {
-            var config = new WebpConfigurationBuilder()
-                .Output("output.webp")
-                .NearLossless(80)
-                .Build();
-
-            var builder = new CommandBuilder(config, @"C:\temp\input.png", @"C:\temp\output.webp");
-            var command = builder.GetCommand();
-
-            Assert.Contains("-near_lossless 80", command);
-        }
-
-        [Fact]
-        public void GetCommand_WithMetadata_ContainsMetadataArg()
-        {
-            var config = new WebpConfigurationBuilder()
-                .Output("output.webp")
-                .Metadata("exif,icc")
-                .Build();
-
-            var builder = new CommandBuilder(config, @"C:\temp\input.png", @"C:\temp\output.webp");
-            var command = builder.GetCommand();
-
-            Assert.Contains("-metadata exif,icc", command);
-        }
-
-        [Fact]
-        public void GetCommand_WithNewOptions_ContainsAllNewArgs()
-        {
-            var config = new WebpConfigurationBuilder()
-                .Output("output.webp")
-                .LosslessPreset(6)
-                .SharpYuv()
-                .Pass(10)
-                .Strong()
-                .PartitionLimit(50)
-                .LowMemory()
-                .AlphaMethod(1)
-                .AlphaFilter("best")
-                .Exact()
-                .NoAlpha()
-                .Hint("photo")
-                .Build();
-
-            var builder = new CommandBuilder(config, @"C:\temp\input.png", @"C:\temp\output.webp");
-            var command = builder.GetCommand();
-
-            Assert.Contains("-z 6", command);
-            Assert.Contains("-sharp_yuv", command);
-            Assert.Contains("-pass 10", command);
-            Assert.Contains("-strong", command);
-            Assert.Contains("-partition_limit 50", command);
-            Assert.Contains("-low_memory", command);
-            Assert.Contains("-alpha_method 1", command);
-            Assert.Contains("-alpha_filter best", command);
-            Assert.Contains("-exact", command);
-            Assert.Contains("-noalpha", command);
-            Assert.Contains("-hint photo", command);
+            var writer = new WebPMemoryWriter();
+            Assert.Equal(nint.Zero, writer.mem);
+            Assert.Equal((nuint)0, writer.size);
         }
     }
 }

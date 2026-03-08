@@ -340,4 +340,10 @@ ASALocalRun/
 /src/.vs/Libwebp.Net/v16
 *.v2
 
+# Native libwebp build artifacts
+native/libwebp-src/
+native/build-win-x64/
+native/build-linux-x64/
+native/build-osx-arm64/
+
 

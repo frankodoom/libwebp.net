@@ -1,17 +1,12 @@
 ﻿using Libwebp.Net.errors;
-using Libwebp.Net.utility;
+using Libwebp.Net.Interop;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Libwebp.Net
 {
     /// <summary>
-    /// Constructs a WebP configuration which is passed to the libwebp process
-    /// execution as params.
+    /// Fluent builder for creating a <see cref="WebPConfiguration"/>.
+    /// All settings map directly to libwebp's native WebPConfig struct fields.
     /// </summary>
     public class WebpConfigurationBuilder
     {
@@ -35,7 +30,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder QualityFactor(float value)
         {
-            _config.QualityFactor = CommandPrefix.QualityFactor + value;
+            _config.NativeQuality = value;
             return this;
         }
 
@@ -44,7 +39,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder AlphaQ(int value)
         {
-            _config.AlphaQ = CommandPrefix.AlphaQuality + value;
+            _config.NativeAlphaQuality = value;
             return this;
         }
 
@@ -54,7 +49,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder Preset(string value)
         {
-            _config.Preset = CommandPrefix.Preset + value;
+            _config.NativePreset = ParsePreset(value);
             return this;
         }
 
@@ -63,7 +58,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder CompressionMethod(int value)
         {
-            _config.CompressionMethod = CommandPrefix.CompressionMethod + value;
+            _config.NativeMethod = value;
             return this;
         }
 
@@ -72,61 +67,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder Lossless()
         {
-            _config.Lossless = CommandPrefix.Lossless;
-            return this;
-        }
-
-        /// <summary>
-        /// Number of segments to use (1..4), default is 4.
-        /// </summary>
-        public WebpConfigurationBuilder NumberOfSegments(int value)
-        {
-            _config.NumberOfSegments = CommandPrefix.NumberOfSegments + value;
-            return this;
-        }
-
-        /// <summary>
-        /// Target size (in bytes) to try and reach for the compressed output.
-        /// </summary>
-        public WebpConfigurationBuilder TargetSize(int value)
-        {
-            _config.TargetSize = CommandPrefix.TargetSize + value;
-            return this;
-        }
-
-        /// <summary>
-        /// Target PSNR (in dB) to try and reach for the compressed output.
-        /// </summary>
-        public WebpConfigurationBuilder TargetPSNR(float value)
-        {
-            _config.TargetPSNR = CommandPrefix.TPSNR + value;
-            return this;
-        }
-
-        /// <summary>
-        /// Input size (width x height) for YUV input.
-        /// </summary>
-        public WebpConfigurationBuilder InputSize(int width, int height)
-        {
-            _config.InputSize = $"{CommandPrefix.InputSize}{width} {height}";
-            return this;
-        }
-
-        /// <summary>
-        /// Spatial noise shaping strength (0..100), default is 50.
-        /// </summary>
-        public WebpConfigurationBuilder SpatialNoiseShaping(int value)
-        {
-            _config.SpatialNoiseShaping = CommandPrefix.SpatialNoiseShaping + value;
-            return this;
-        }
-
-        /// <summary>
-        /// Deblocking filter strength (0=off..100).
-        /// </summary>
-        public WebpConfigurationBuilder Filter(int value)
-        {
-            _config.Filter = CommandPrefix.Filter + value;
+            _config.NativeLossless = true;
             return this;
         }
 
@@ -135,7 +76,77 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder LosslessPreset(int level)
         {
-            _config.LosslessPreset = CommandPrefix.LosslessPreset + level;
+            _config.NativeLossless = true;
+            _config.NativeLosslessPreset = level;
+            // Map lossless presets to method levels as libwebp does
+            _config.NativeMethod = level switch
+            {
+                0 => 0,
+                1 => 1,
+                2 => 2,
+                3 => 3,
+                4 => 3,
+                5 => 4,
+                6 => 4,
+                7 => 4,
+                8 => 5,
+                9 => 6,
+                _ => 4
+            };
+            return this;
+        }
+
+        /// <summary>
+        /// Number of segments to use (1..4), default is 4.
+        /// </summary>
+        public WebpConfigurationBuilder NumberOfSegments(int value)
+        {
+            _config.NativeSegments = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Target size (in bytes) to try and reach for the compressed output.
+        /// </summary>
+        public WebpConfigurationBuilder TargetSize(int value)
+        {
+            _config.NativeTargetSize = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Target PSNR (in dB) to try and reach for the compressed output.
+        /// </summary>
+        public WebpConfigurationBuilder TargetPSNR(float value)
+        {
+            _config.NativeTargetPSNR = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Input size (width x height) for YUV input.
+        /// </summary>
+        public WebpConfigurationBuilder InputSize(int width, int height)
+        {
+            _config.InputSizeDimensions = (width, height);
+            return this;
+        }
+
+        /// <summary>
+        /// Spatial noise shaping strength (0..100), default is 50.
+        /// </summary>
+        public WebpConfigurationBuilder SpatialNoiseShaping(int value)
+        {
+            _config.NativeSnsStrength = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Deblocking filter strength (0=off..100).
+        /// </summary>
+        public WebpConfigurationBuilder Filter(int value)
+        {
+            _config.NativeFilterStrength = value;
             return this;
         }
 
@@ -144,7 +155,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder Sharpness(int value)
         {
-            _config.Sharpness = CommandPrefix.Sharpness + value;
+            _config.NativeFilterSharpness = value;
             return this;
         }
 
@@ -153,7 +164,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder Strong()
         {
-            _config.Strong = CommandPrefix.Strong;
+            _config.NativeFilterType = 1;
             return this;
         }
 
@@ -162,7 +173,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder NoStrong()
         {
-            _config.Strong = CommandPrefix.NoStrong;
+            _config.NativeFilterType = 0;
             return this;
         }
 
@@ -172,7 +183,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder SharpYuv()
         {
-            _config.SharpYuv = CommandPrefix.SharpYuv;
+            _config.NativeSharpYuv = true;
             return this;
         }
 
@@ -182,7 +193,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder PartitionLimit(int value)
         {
-            _config.PartitionLimit = CommandPrefix.PartitionLimit + value;
+            _config.NativePartitionLimit = value;
             return this;
         }
 
@@ -192,7 +203,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder Pass(int value)
         {
-            _config.Pass = CommandPrefix.Pass + value;
+            _config.NativePass = value;
             return this;
         }
 
@@ -201,7 +212,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder Crop(int x, int y, int width, int height)
         {
-            _config.Crop = $"{CommandPrefix.Crop}{x} {y} {width} {height}";
+            _config.CropRect = (x, y, width, height);
             return this;
         }
 
@@ -211,7 +222,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder Resize(int width, int height)
         {
-            _config.Resize = $"{CommandPrefix.Resize}{width} {height}";
+            _config.ResizeDimensions = (width, height);
             return this;
         }
 
@@ -220,7 +231,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder MultiThreading()
         {
-            _config.MultiThreading = CommandPrefix.MultiThreading;
+            _config.NativeMultiThreading = true;
             return this;
         }
 
@@ -229,7 +240,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder LowMemory()
         {
-            _config.LowMemory = CommandPrefix.LowMemory;
+            _config.NativeLowMemory = true;
             return this;
         }
 
@@ -238,7 +249,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder AlphaMethod(int value)
         {
-            _config.AlphaMethod = CommandPrefix.AlphaMethod + value;
+            _config.NativeAlphaCompression = value;
             return this;
         }
 
@@ -248,7 +259,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder AlphaFilter(string value)
         {
-            _config.AlphaFilter = CommandPrefix.AlphaFilter + value;
+            _config.NativeAlphaFiltering = ParseAlphaFilter(value);
             return this;
         }
 
@@ -257,7 +268,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder Exact()
         {
-            _config.Exact = CommandPrefix.Exact;
+            _config.NativeExact = true;
             return this;
         }
 
@@ -266,7 +277,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder NoAlpha()
         {
-            _config.NoAlpha = CommandPrefix.NoAlpha;
+            _config.NativeNoAlpha = true;
             return this;
         }
 
@@ -276,7 +287,7 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder NearLossless(int value)
         {
-            _config.NearLossless = CommandPrefix.NearLossless + value;
+            _config.NativeNearLossless = value;
             return this;
         }
 
@@ -286,18 +297,52 @@ namespace Libwebp.Net
         /// </summary>
         public WebpConfigurationBuilder Hint(string value)
         {
-            _config.Hint = CommandPrefix.Hint + value;
+            _config.NativeImageHint = ParseHint(value);
             return this;
         }
 
         /// <summary>
         /// Copy metadata from input to output.
         /// Comma-separated list of: all, none (default), exif, icc, xmp.
+        /// Note: Metadata preservation is not supported in the native in-memory
+        /// encoding path. This setting is stored for future compatibility.
         /// </summary>
         public WebpConfigurationBuilder Metadata(string value)
         {
-            _config.Metadata = CommandPrefix.Metadata + value;
+            _config.MetadataOption = value;
             return this;
         }
+
+        // ── Private helpers ──
+
+        private static WebPPreset ParsePreset(string value) =>
+            value?.ToLowerInvariant() switch
+            {
+                "photo" => Interop.WebPPreset.Photo,
+                "picture" => Interop.WebPPreset.Picture,
+                "drawing" => Interop.WebPPreset.Drawing,
+                "icon" => Interop.WebPPreset.Icon,
+                "text" => Interop.WebPPreset.Text,
+                "default" => Interop.WebPPreset.Default,
+                _ => Interop.WebPPreset.Default
+            };
+
+        private static int ParseAlphaFilter(string value) =>
+            value?.ToLowerInvariant() switch
+            {
+                "none" => 0,
+                "fast" => 1,
+                "best" => 2,
+                _ => 1
+            };
+
+        private static WebPImageHint ParseHint(string value) =>
+            value?.ToLowerInvariant() switch
+            {
+                "photo" => WebPImageHint.Photo,
+                "picture" => WebPImageHint.Picture,
+                "graph" => WebPImageHint.Graph,
+                _ => WebPImageHint.Default
+            };
     }
 }

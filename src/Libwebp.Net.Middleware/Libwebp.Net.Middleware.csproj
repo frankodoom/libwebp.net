@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.0</Version>
+    <Description>ASP.NET Core middleware that automatically converts uploaded images (JPEG, PNG, GIF, BMP, TIFF) to Google's WebP format. Drop it into your pipeline and every image upload is optimised with zero code changes in your controllers.</Description>
+    <Copyright>Copyright 2021</Copyright>
+    <PackageProjectUrl>https://github.com/frankodoom/libwebp.net</PackageProjectUrl>
+    <PackageTags>webp, middleware, aspnetcore, image-compression, upload, conversion</PackageTags>
+    <RepositoryUrl>https://github.com/frankodoom/libwebp.net</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Libwebp.Net.csproj" />
+  </ItemGroup>
+
+</Project>

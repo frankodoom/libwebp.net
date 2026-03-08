@@ -1,6 +1,6 @@
 ﻿@model web.Models.ConvertViewModel
 @{
-    ViewData["Title"] = "LibWebp.Net — WebP Encoder (cwebp 1.5.0)";
+    ViewData["Title"] = "LibWebp.Net — WebP Encoder (libwebp 1.5.0)";
 }
 
 <div class="text-center">
@@ -11,6 +11,35 @@
 <div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-10">
+
+            @* ═══ Quick Convert (Middleware-powered) ══════════════════ *@
+            <div class="card mb-4 border-primary">
+                <div class="card-header bg-primary text-white fw-bold">
+                    <i class="fas fa-bolt me-1"></i> Quick Convert — Middleware
+                    <span class="badge bg-light text-primary ms-2">NEW</span>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted mb-2">
+                        The <code>WebpUploadMiddleware</code> automatically converts every uploaded image
+                        to WebP <em>before</em> the controller even sees it. Just pick a file and click convert.
+                    </p>
+                    <form asp-controller="Home" asp-action="QuickConvert" method="post" enctype="multipart/form-data">
+                        @Html.AntiForgeryToken()
+                        <div class="d-flex align-items-center gap-2">
+                            <input type="file" name="file" class="form-control form-control-lg"
+                                   accept="image/jpeg,image/png,image/gif,image/bmp,image/tiff" />
+                            <button type="submit" class="btn btn-lg btn-primary">
+                                <i class="fas fa-magic"></i> Convert
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <hr class="my-4" />
+            <h5 class="text-center text-muted mb-3">
+                <i class="fas fa-sliders-h me-1"></i> Advanced — Manual Conversion with Full Options
+            </h5>
 
             <form asp-controller="Home" asp-action="Convert" method="post" enctype="multipart/form-data">
                 @Html.AntiForgeryToken()

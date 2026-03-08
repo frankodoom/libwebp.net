@@ -30,6 +30,30 @@ namespace web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Quick Convert — the middleware has already converted the upload to WebP
+        /// by the time the controller sees it, so we just stream it back.
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> QuickConvertAsync(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                TempData["Error"] = "Please select an image file.";
+                return RedirectToAction("Index");
+            }
+
+            // The middleware already converted the file to WebP.
+            // We just pass it straight back to the browser.
+            var ms = new MemoryStream();
+            await file.CopyToAsync(ms);
+            ms.Position = 0;
+
+            var fileName = file.FileName; // already *.webp thanks to middleware
+            return File(ms, "image/webp", fileName);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ConvertAsync(ConvertViewModel model)

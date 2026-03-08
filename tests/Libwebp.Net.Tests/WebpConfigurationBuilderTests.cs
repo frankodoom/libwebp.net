@@ -1,5 +1,6 @@
 using Libwebp.Net;
 using Libwebp.Net.errors;
+using Libwebp.Net.Interop;
 using Libwebp.Net.utility;
 using Xunit;
 
@@ -42,344 +43,324 @@ namespace Libwebp.Net.Tests
         }
 
         [Fact]
-        public void Build_WithQualityFactor_SetsQualityFactor()
+        public void Build_WithQualityFactor_SetsNativeQuality()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .QualityFactor(80)
                 .Build();
 
-            Assert.Contains("-q ", config.QualityFactor);
-            Assert.Contains("80", config.QualityFactor);
+            Assert.Equal(80f, config.NativeQuality);
         }
 
         [Fact]
-        public void Build_WithPreset_SetsPreset()
+        public void Build_WithPreset_SetsNativePreset()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .Preset(Preset.PHOTO)
                 .Build();
 
-            Assert.Contains("-preset ", config.Preset);
-            Assert.Contains("photo", config.Preset);
+            Assert.Equal(WebPPreset.Photo, config.NativePreset);
         }
 
         [Fact]
-        public void Build_WithLossless_SetsLossless()
+        public void Build_WithLossless_SetsNativeLossless()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .Lossless()
                 .Build();
 
-            Assert.Contains("-lossless", config.Lossless);
+            Assert.True(config.NativeLossless);
         }
 
         [Fact]
-        public void Build_WithAlphaQ_SetsAlphaQ()
+        public void Build_WithAlphaQ_SetsNativeAlphaQuality()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .AlphaQ(50)
                 .Build();
 
-            Assert.Contains("-alpha_q ", config.AlphaQ);
-            Assert.Contains("50", config.AlphaQ);
+            Assert.Equal(50, config.NativeAlphaQuality);
         }
 
         [Fact]
-        public void Build_WithCompressionMethod_SetsCompressionMethod()
+        public void Build_WithCompressionMethod_SetsNativeMethod()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .CompressionMethod(4)
                 .Build();
 
-            Assert.Contains("-m ", config.CompressionMethod);
-            Assert.Contains("4", config.CompressionMethod);
+            Assert.Equal(4, config.NativeMethod);
         }
 
         [Fact]
-        public void Build_WithNumberOfSegments_SetsNumberOfSegments()
+        public void Build_WithNumberOfSegments_SetsNativeSegments()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .NumberOfSegments(3)
                 .Build();
 
-            Assert.Contains("-segments ", config.NumberOfSegments);
-            Assert.Contains("3", config.NumberOfSegments);
+            Assert.Equal(3, config.NativeSegments);
         }
 
         [Fact]
-        public void Build_WithTargetSize_SetsTargetSize()
+        public void Build_WithTargetSize_SetsNativeTargetSize()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .TargetSize(50000)
                 .Build();
 
-            Assert.Contains("-size ", config.TargetSize);
-            Assert.Contains("50000", config.TargetSize);
+            Assert.Equal(50000, config.NativeTargetSize);
         }
 
         [Fact]
-        public void Build_WithTargetPSNR_SetsTargetPSNR()
+        public void Build_WithTargetPSNR_SetsNativeTargetPSNR()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .TargetPSNR(42.5f)
                 .Build();
 
-            Assert.Contains("-psnr ", config.TargetPSNR);
-            Assert.Contains("42.5", config.TargetPSNR);
+            Assert.Equal(42.5f, config.NativeTargetPSNR);
         }
 
         [Fact]
-        public void Build_WithSpatialNoiseShaping_SetsSNS()
+        public void Build_WithSpatialNoiseShaping_SetsNativeSnsStrength()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .SpatialNoiseShaping(80)
                 .Build();
 
-            Assert.Contains("-sns ", config.SpatialNoiseShaping);
-            Assert.Contains("80", config.SpatialNoiseShaping);
+            Assert.Equal(80, config.NativeSnsStrength);
         }
 
         [Fact]
-        public void Build_WithFilter_SetsFilter()
+        public void Build_WithFilter_SetsNativeFilterStrength()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .Filter(60)
                 .Build();
 
-            Assert.Contains("-f ", config.Filter);
-            Assert.Contains("60", config.Filter);
+            Assert.Equal(60, config.NativeFilterStrength);
         }
 
         [Fact]
-        public void Build_WithInputSize_SetsInputSize()
+        public void Build_WithInputSize_SetsInputSizeDimensions()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .InputSize(1920, 1080)
                 .Build();
 
-            Assert.Contains("-s ", config.InputSize);
-            Assert.Contains("1920", config.InputSize);
-            Assert.Contains("1080", config.InputSize);
+            Assert.Equal((1920, 1080), config.InputSizeDimensions);
         }
 
         [Fact]
-        public void Build_WithLosslessPreset_SetsLosslessPreset()
+        public void Build_WithLosslessPreset_SetsNativeLosslessAndMethod()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .LosslessPreset(6)
                 .Build();
 
-            Assert.Contains("-z ", config.LosslessPreset);
-            Assert.Contains("6", config.LosslessPreset);
+            Assert.True(config.NativeLossless);
+            Assert.Equal(6, config.NativeLosslessPreset);
         }
 
         [Fact]
-        public void Build_WithSharpness_SetsSharpness()
+        public void Build_WithSharpness_SetsNativeFilterSharpness()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .Sharpness(3)
                 .Build();
 
-            Assert.Contains("-sharpness ", config.Sharpness);
-            Assert.Contains("3", config.Sharpness);
+            Assert.Equal(3, config.NativeFilterSharpness);
         }
 
         [Fact]
-        public void Build_WithStrong_SetsStrong()
+        public void Build_WithStrong_SetsNativeFilterType()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .Strong()
                 .Build();
 
-            Assert.Contains("-strong", config.Strong);
+            Assert.Equal(1, config.NativeFilterType);
         }
 
         [Fact]
-        public void Build_WithNoStrong_SetsNoStrong()
+        public void Build_WithNoStrong_SetsNativeFilterTypeToSimple()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .NoStrong()
                 .Build();
 
-            Assert.Contains("-nostrong", config.Strong);
+            Assert.Equal(0, config.NativeFilterType);
         }
 
         [Fact]
-        public void Build_WithSharpYuv_SetsSharpYuv()
+        public void Build_WithSharpYuv_SetsNativeSharpYuv()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .SharpYuv()
                 .Build();
 
-            Assert.Contains("-sharp_yuv", config.SharpYuv);
+            Assert.True(config.NativeSharpYuv);
         }
 
         [Fact]
-        public void Build_WithPartitionLimit_SetsPartitionLimit()
+        public void Build_WithPartitionLimit_SetsNativePartitionLimit()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .PartitionLimit(50)
                 .Build();
 
-            Assert.Contains("-partition_limit ", config.PartitionLimit);
-            Assert.Contains("50", config.PartitionLimit);
+            Assert.Equal(50, config.NativePartitionLimit);
         }
 
         [Fact]
-        public void Build_WithPass_SetsPass()
+        public void Build_WithPass_SetsNativePass()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .Pass(6)
                 .Build();
 
-            Assert.Contains("-pass ", config.Pass);
-            Assert.Contains("6", config.Pass);
+            Assert.Equal(6, config.NativePass);
         }
 
         [Fact]
-        public void Build_WithCrop_SetsCrop()
+        public void Build_WithCrop_SetsCropRect()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .Crop(10, 20, 300, 400)
                 .Build();
 
-            Assert.Contains("-crop ", config.Crop);
-            Assert.Contains("10 20 300 400", config.Crop);
+            Assert.NotNull(config.CropRect);
+            Assert.Equal((10, 20, 300, 400), config.CropRect.Value);
         }
 
         [Fact]
-        public void Build_WithResize_SetsResize()
+        public void Build_WithResize_SetsResizeDimensions()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .Resize(640, 480)
                 .Build();
 
-            Assert.Contains("-resize ", config.Resize);
-            Assert.Contains("640 480", config.Resize);
+            Assert.Equal((640, 480), config.ResizeDimensions);
         }
 
         [Fact]
-        public void Build_WithMultiThreading_SetsMultiThreading()
+        public void Build_WithMultiThreading_SetsNativeMultiThreading()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .MultiThreading()
                 .Build();
 
-            Assert.Contains("-mt", config.MultiThreading);
+            Assert.True(config.NativeMultiThreading);
         }
 
         [Fact]
-        public void Build_WithLowMemory_SetsLowMemory()
+        public void Build_WithLowMemory_SetsNativeLowMemory()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .LowMemory()
                 .Build();
 
-            Assert.Contains("-low_memory", config.LowMemory);
+            Assert.True(config.NativeLowMemory);
         }
 
         [Fact]
-        public void Build_WithAlphaMethod_SetsAlphaMethod()
+        public void Build_WithAlphaMethod_SetsNativeAlphaCompression()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .AlphaMethod(1)
                 .Build();
 
-            Assert.Contains("-alpha_method ", config.AlphaMethod);
-            Assert.Contains("1", config.AlphaMethod);
+            Assert.Equal(1, config.NativeAlphaCompression);
         }
 
         [Fact]
-        public void Build_WithAlphaFilter_SetsAlphaFilter()
+        public void Build_WithAlphaFilter_SetsNativeAlphaFiltering()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .AlphaFilter("best")
                 .Build();
 
-            Assert.Contains("-alpha_filter ", config.AlphaFilter);
-            Assert.Contains("best", config.AlphaFilter);
+            Assert.Equal(2, config.NativeAlphaFiltering); // best = 2
         }
 
         [Fact]
-        public void Build_WithExact_SetsExact()
+        public void Build_WithExact_SetsNativeExact()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .Exact()
                 .Build();
 
-            Assert.Contains("-exact", config.Exact);
+            Assert.True(config.NativeExact);
         }
 
         [Fact]
-        public void Build_WithNoAlpha_SetsNoAlpha()
+        public void Build_WithNoAlpha_SetsNativeNoAlpha()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .NoAlpha()
                 .Build();
 
-            Assert.Contains("-noalpha", config.NoAlpha);
+            Assert.True(config.NativeNoAlpha);
         }
 
         [Fact]
-        public void Build_WithNearLossless_SetsNearLossless()
+        public void Build_WithNearLossless_SetsNativeNearLossless()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .NearLossless(60)
                 .Build();
 
-            Assert.Contains("-near_lossless ", config.NearLossless);
-            Assert.Contains("60", config.NearLossless);
+            Assert.Equal(60, config.NativeNearLossless);
         }
 
         [Fact]
-        public void Build_WithHint_SetsHint()
+        public void Build_WithHint_SetsNativeImageHint()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .Hint("photo")
                 .Build();
 
-            Assert.Contains("-hint ", config.Hint);
-            Assert.Contains("photo", config.Hint);
+            Assert.Equal(WebPImageHint.Photo, config.NativeImageHint);
         }
 
         [Fact]
-        public void Build_WithMetadata_SetsMetadata()
+        public void Build_WithMetadata_SetsMetadataOption()
         {
             var config = new WebpConfigurationBuilder()
                 .Output("test.webp")
                 .Metadata("all")
                 .Build();
 
-            Assert.Contains("-metadata ", config.Metadata);
-            Assert.Contains("all", config.Metadata);
+            Assert.Equal("all", config.MetadataOption);
         }
 
         [Fact]
@@ -395,11 +376,34 @@ namespace Libwebp.Net.Tests
                 .Build();
 
             Assert.Equal("output.webp", config.OutputFileName);
-            Assert.NotNull(config.Preset);
-            Assert.NotNull(config.QualityFactor);
-            Assert.NotNull(config.Lossless);
-            Assert.NotNull(config.CompressionMethod);
-            Assert.NotNull(config.AlphaQ);
+            Assert.Equal(WebPPreset.Photo, config.NativePreset);
+            Assert.Equal(85f, config.NativeQuality);
+            Assert.True(config.NativeLossless);
+            Assert.Equal(6, config.NativeMethod);
+            Assert.Equal(100, config.NativeAlphaQuality);
+        }
+
+        [Fact]
+        public void Build_DefaultValues_MatchLibwebpDefaults()
+        {
+            var config = new WebpConfigurationBuilder()
+                .Output("test.webp")
+                .Build();
+
+            Assert.Equal(75f, config.NativeQuality);
+            Assert.Equal(4, config.NativeMethod);
+            Assert.Equal(4, config.NativeSegments);
+            Assert.Equal(50, config.NativeSnsStrength);
+            Assert.Equal(1, config.NativeFilterType); // strong by default
+            Assert.Equal(100, config.NativeAlphaQuality);
+            Assert.Equal(1, config.NativePass);
+            Assert.Equal(100, config.NativeNearLossless); // off
+            Assert.False(config.NativeLossless);
+            Assert.False(config.NativeMultiThreading);
+            Assert.False(config.NativeLowMemory);
+            Assert.False(config.NativeExact);
+            Assert.False(config.NativeNoAlpha);
+            Assert.False(config.NativeSharpYuv);
         }
     }
 }

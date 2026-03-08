@@ -3,14 +3,15 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.0</Version>
-    <Description>An asynchronuous utility for encoding images to Google's .webp format. Seemlessly compress images to lossy and lossless formats in your .NET projects to improve network performance and reduce file size on disk. WebP generally has better compression than JPEG, PNG and GIF and is designed to supersede them. You can see the library in action by using the webclient , your result will be downloaded into your browser.</Description>
+    <Version>2.0.0</Version>
+    <Description>A high-performance .NET library for encoding images to Google's WebP format using native libwebp P/Invoke. Encode images to lossy and lossless WebP entirely in memory — no process spawning, no temp files. Supports the full range of WebP encoding options including quality, presets, lossless, crop, resize, multithreading, and more.</Description>
     <Copyright>Copyright 2021</Copyright>
     <PackageProjectUrl>https://github.com/frankodoom/libwebp.net</PackageProjectUrl>
-    <PackageTags>google, dotnet, webp, file-format, compress-images, asp-net-core, image-compression, dotnet-standard, encoding-convertors, encoding-library, dotnet-standand</PackageTags>
+    <PackageTags>google, dotnet, webp, file-format, compress-images, asp-net-core, image-compression, encoding-library, native, pinvoke, libwebp</PackageTags>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <RepositoryUrl>https://github.com/frankodoom/libwebp.net</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,52 +21,46 @@
   <ItemGroup>
     <Compile Remove="bin\**" />
     <Compile Remove="dist\**" />
+    <Compile Remove="Libwebp.Net.Middleware\**" />
     <EmbeddedResource Remove="bin\**" />
     <EmbeddedResource Remove="dist\**" />
+    <EmbeddedResource Remove="Libwebp.Net.Middleware\**" />
     <None Remove="bin\**" />
     <None Remove="dist\**" />
+    <None Remove="Libwebp.Net.Middleware\**" />
   </ItemGroup>
 
+  <!-- Native libwebp shared libraries — stored in codecs/ and loaded
+       via P/Invoke at runtime using a custom NativeLibrary resolver.
+       For NuGet packaging they are mapped into runtimes/{rid}/native/. -->
   <ItemGroup>
-    <None Remove="codecs\linux\cwebp" />
-    <None Remove="codecs\osx\cwebp" />
-    <None Remove="codecs\win\cwebp.exe" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="codecs\linux\cwebp" Condition="Exists('codecs\linux\cwebp')">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="codecs\osx\cwebp" Condition="Exists('codecs\osx\cwebp')">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="codecs\win\cwebp.exe" Condition="Exists('codecs\win\cwebp.exe')">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="codecs\win\freeglut.dll" Condition="Exists('codecs\win\freeglut.dll')">
+    <!-- Windows -->
+    <None Include="codecs\win\libwebp.dll" Pack="true" PackagePath="runtimes/win-x64/native/" Condition="Exists('codecs\win\libwebp.dll')">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>libwebp.dll</Link>
     </None>
-    <None Update="image.jpg" Condition="Exists('image.jpg')">
+    <None Include="codecs\win\libsharpyuv.dll" Pack="true" PackagePath="runtimes/win-x64/native/" Condition="Exists('codecs\win\libsharpyuv.dll')">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>libsharpyuv.dll</Link>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <!-- Linux -->
+    <None Include="codecs\linux\libwebp.so" Pack="true" PackagePath="runtimes/linux-x64/native/" Condition="Exists('codecs\linux\libwebp.so')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>libwebp.so</Link>
+    </None>
+    <None Include="codecs\linux\libsharpyuv.so" Pack="true" PackagePath="runtimes/linux-x64/native/" Condition="Exists('codecs\linux\libsharpyuv.so')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>libsharpyuv.so</Link>
+    </None>
+    <!-- macOS -->
+    <None Include="codecs\osx\libwebp.dylib" Pack="true" PackagePath="runtimes/osx-arm64/native/" Condition="Exists('codecs\osx\libwebp.dylib')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>libwebp.dylib</Link>
+    </None>
+    <None Include="codecs\osx\libsharpyuv.dylib" Pack="true" PackagePath="runtimes/osx-arm64/native/" Condition="Exists('codecs\osx\libsharpyuv.dylib')">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>libsharpyuv.dylib</Link>
+    </None>
   </ItemGroup>
 
 </Project>
