@@ -9,84 +9,6 @@ You can see the library in action by using the web client — your result will b
 
 ---
 
-# Architecture
-
-Libwebp.Net calls Google's native **libwebp** C library directly via **P/Invoke** — there are no child processes spawned, no CLI wrappers, and **zero third-party NuGet dependencies**. Everything runs in-process and entirely in memory.
-
-### Key Components
-
-| Component | Description |
-| --- | --- |
-| **`WebpEncoder`** | High-level public API. Accepts image files or raw pixel data and returns encoded WebP bytes. |
-| **`WebpConfigurationBuilder`** | Fluent builder that maps 29+ encoding options to the native `WebPConfig` struct. |
-| **`NativeEncoder`** | Low-level P/Invoke wrapper. Calls `WebPEncode()` and manages the `WebPPicture` / `WebPConfig` lifecycle. |
-| **`PlatformImageDecoder`** | Decodes common image formats (JPEG, PNG, BMP, GIF, TIFF) to raw pixels using platform-native APIs — **GDI+** on Windows and **libwebp's own decoder** for WebP input on all platforms. |
-| **`LibWebPNative`** | Static class containing all `[DllImport("libwebp")]` declarations — the simple API, advanced API, decoder, and memory management functions. |
-| **`LibWebPResolver`** | Custom `NativeLibrary.SetDllImportResolver` that locates the platform-specific shared library (`libwebp.dll`, `libwebp.so`, or `libwebp.dylib`) at runtime. |
-| **`WebpUploadMiddleware`** | ASP.NET Core middleware that intercepts multipart uploads and converts eligible images to WebP before they reach your controllers. |
-
-### Encoding Pipeline
-
-```
-┌──────────────┐     ┌──────────────────────┐     ┌────────────────┐     ┌─────────────┐
-│  Image File  │────▶│ PlatformImageDecoder  │────▶│ NativeEncoder  │────▶│  WebP bytes │
-│ (JPEG/PNG/…) │     │ (magic-byte detect →  │     │ (WebPConfig +  │     │  (output)   │
-│              │     │  GDI+ or libwebp      │     │  WebPPicture + │     │             │
-│              │     │  → raw pixels)        │     │  WebPEncode)   │     │             │
-└──────────────┘     └──────────────────────┘     └────────────────┘     └─────────────┘
-
-┌──────────────┐                                   ┌────────────────┐     ┌─────────────┐
-│  Raw RGBA    │──────────────────────────────────▶│ NativeEncoder  │────▶│  WebP bytes │
-│  pixels      │  (skip decoding; dimensions       │                │     │  (output)   │
-│              │   configured via InputSize())     │                │     │             │
-└──────────────┘                                   └────────────────┘     └─────────────┘
-```
-
----
-
-# How It Works
-
-### Image Decoding (Auto-Detection)
-
-When you pass a `MemoryStream` to `WebpEncoder.EncodeAsync()`, the encoder inspects the first few bytes (magic bytes) to determine whether the input is an encoded image file or raw pixel data:
-
-| Signature | Format |
-| --- | --- |
-| `FF D8 FF` | JPEG |
-| `89 50 4E 47` | PNG |
-| `42 4D` | BMP |
-| `47 49 46` | GIF |
-| `49 49 2A 00` / `4D 4D 00 2A` | TIFF |
-| `52 49 46 46 … 57 45 42 50` | WebP |
-
-If a known signature is found, `PlatformImageDecoder` automatically decodes the file to raw pixels:
-
-- **JPEG, PNG, BMP, GIF, TIFF (Windows):** Decoded via **GDI+ P/Invoke** (`gdiplus.dll`). The bitmap is locked as `PixelFormat32bppARGB`, producing **BGRA** pixel data. No managed wrappers like `System.Drawing` are needed — raw COM and GDI+ P/Invoke calls are used directly.
-- **WebP input:** Decoded via **libwebp's own `WebPDecodeRGBA`** function. This works on all platforms (Windows, Linux, macOS) and produces **RGBA** pixel data.
-- **Raw RGBA pixels:** If no signature matches, the data is treated as raw pixel data. You must call `InputSize(width, height)` on the builder so the encoder knows the dimensions.
-
-The encoder automatically handles the **BGRA vs RGBA** pixel order difference — GDI+-decoded images are imported with `WebPPictureImportBGRA`, while all other paths use `WebPPictureImportRGBA`.
-
-### Native Library Loading
-
-The library uses `NativeLibrary.SetDllImportResolver` (a .NET API) to locate the correct platform-specific shared library at runtime. The resolver checks these locations in order:
-
-1. **Assembly output directory** — the native lib is copied here during build via `CopyToOutputDirectory`.
-2. **`codecs/{platform}/`** — relative to the source tree for development and test runs.
-3. **Default .NET probing** — `runtimes/{rid}/native/`, system paths, etc. (standard NuGet runtime package layout).
-
-The resolver is registered once (idempotent, thread-safe) and only intercepts `DllImport("libwebp")` — all other native libraries use normal .NET resolution.
-
-### Memory Management
-
-All encoding happens entirely in memory with no temporary files:
-
-- A **managed `MemoryStream`** collects the WebP output bytes via a custom writer callback pinned with `GCHandle`.
-- Native memory allocated by libwebp (e.g. `WebPDecodeRGBA` output) is freed with `WebPFree`.
-- GDI+ resources (bitmaps, COM streams, global memory) are cleaned up in `finally` blocks.
-
----
-
 # Using the Library
 
 ### General Usage
@@ -113,13 +35,16 @@ class Program
         var encoder = new WebpEncoder(config);
 
         // start encoding by passing your memorystream and filename
-        var output = await encoder.EncodeAsync(ms, Path.GetFileName(file.Name));
+        using var output = await encoder.EncodeAsync(ms, Path.GetFileName(file.Name));
 
-        /* your converted file is returned as FileStream — download it,
+        /* your converted file is returned as a MemoryStream — download it,
            copy to disk, write to db, or save on cloud storage */
 
-        Console.WriteLine($"Your output file : {Path.GetFileName(output.Name)}");
-        Console.WriteLine($"Length in bytes : {output.Length}");
+        Console.WriteLine($"Output size : {output.Length} bytes");
+
+        // Example: save to disk
+        using var outFile = new FileStream("output.webp", FileMode.Create);
+        await output.CopyToAsync(outFile);
     }
 }
 ```
@@ -149,16 +74,15 @@ public async Task<IActionResult> UploadAsync(IFormFile file)
 
     // copy file to memory stream
     var ms = new MemoryStream();
-    file.CopyTo(ms);
+    await file.CopyToAsync(ms);
 
-    // call the encoder and pass in the MemoryStream and input FileName
-    // the encoder after encoding will return a FileStream output
-    Stream fs = await encoder.EncodeAsync(ms, file.FileName);
+    // encode — returns a MemoryStream with the WebP data
+    var webpStream = await encoder.EncodeAsync(ms, file.FileName);
 
     /* Do whatever you want with the file — download, copy to disk,
        or save to cloud */
 
-    return File(fs, "application/octet-stream", oFileName);
+    return File(webpStream, "image/webp", oFileName);
 }
 ```
 
