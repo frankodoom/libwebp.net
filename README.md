@@ -3,7 +3,7 @@
 
 An asynchronous .NET library for encoding images to Google's WebP format. Seamlessly compress images using lossy and lossless encoding to improve network performance and reduce file size on disk. WebP generally has better compression than JPEG, PNG, and GIF and is designed to supersede them.
 
-**Powered by libwebp v1.5.0** — supports **Windows (x64)**, **Linux (x86-64)**, and **macOS (arm64)** out of the box. The native library is loaded via P/Invoke at runtime.
+**Powered by libwebp v1.5.0** — currently supports **Windows (x64)** with **Linux** and **macOS** support coming soon. The native library is loaded via P/Invoke at runtime.
 
 You can see the library in action by using the web client — your result will be downloaded into your browser.
 
@@ -268,22 +268,20 @@ All options supported by libwebp v1.5.0 are available. Use them to fine-tune the
 | Platform | Architecture | Status |
 | --- | --- | --- |
 | Windows | x64 | ✅ Supported |
-| Linux | x86-64 | ✅ Supported |
-| macOS | arm64 (Apple Silicon) | ✅ Supported |
+| Linux | x86-64 | 🔜 Coming soon |
+| macOS | arm64 (Apple Silicon) | 🔜 Coming soon |
 
 ## Supported Input Formats
 
-| Format | Windows | Linux / macOS |
-| --- | --- | --- |
-| JPEG | ✅ Auto-decoded via GDI+ | ❌ Pass raw RGBA pixels instead |
-| PNG  | ✅ Auto-decoded via GDI+ | ❌ Pass raw RGBA pixels instead |
-| BMP  | ✅ Auto-decoded via GDI+ | ❌ Pass raw RGBA pixels instead |
-| GIF  | ✅ Auto-decoded via GDI+ | ❌ Pass raw RGBA pixels instead |
-| TIFF | ✅ Auto-decoded via GDI+ | ❌ Pass raw RGBA pixels instead |
-| WebP | ✅ Auto-decoded via libwebp | ✅ Auto-decoded via libwebp |
-| Raw RGBA pixels | ✅ `Encode(byte[], int, int)` | ✅ `Encode(byte[], int, int)` |
-
-On non-Windows platforms, decode your images to raw RGBA pixels using any imaging library of your choice, then call `Encode(byte[] rgba, int width, int height)` or configure `InputSize(w, h)` and use `EncodeAsync(MemoryStream, string)`.
+| Format | Supported |
+| --- | --- |
+| JPEG | ✅ Auto-decoded via GDI+ |
+| PNG  | ✅ Auto-decoded via GDI+ |
+| BMP  | ✅ Auto-decoded via GDI+ |
+| GIF  | ✅ Auto-decoded via GDI+ |
+| TIFF | ✅ Auto-decoded via GDI+ |
+| WebP | ✅ Auto-decoded via libwebp |
+| Raw RGBA pixels | ✅ `Encode(byte[], int, int)` |
 
 # Licence
 
